@@ -2,9 +2,75 @@
 <html>
 <head>
   <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px #ccc;
+      max-width: 300px;
+      width: 100%;
+    }
+    button {
+      padding: 15px;
+      width: 100%;
+      background: #4285F4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
-  <h2>Welcome</h2>
-  <p>Login successful</p>
+
+<div class="box">
+  <h2>Dashboard</h2>
+  <button onclick="goMembers()">Members</button>
+</div>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyA8qJwI0ZWV30JKq2eB8yv-LsMRjz6INLg",
+    authDomain: "shreematkaboss.firebaseapp.com",
+    projectId: "shreematkaboss",
+    storageBucket: "shreematkaboss.firebasestorage.app",
+    messagingSenderId: "1004401076062",
+    appId: "1:1004401076062:web:e7e587eefd3483b7c5d1cf"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // Protect page: redirect to login if not logged in
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      window.location.href = "index.html";
+    }
+  });
+
+  // Open Google Sites page
+  function goMembers() {
+    window.location.href = "https://sites.google.com/view/vipmembershipmatka/home";
+  }
+</script>
+
 </body>
 </html>
