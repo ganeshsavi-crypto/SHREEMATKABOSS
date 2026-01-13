@@ -1,76 +1,524 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
-  <style>
-    body {
-      font-family: Arial;
-      background: #f4f6f8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .box {
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 0 10px #ccc;
-      max-width: 300px;
-      width: 100%;
-    }
-    button {
-      padding: 15px;
-      width: 100%;
-      background: #4285F4;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHRIMATKABOSS - Daily Game Results</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            border-bottom: 5px solid #ffc107;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .logo {
+            font-size: 32px;
+            margin-right: 15px;
+            color: #ffc107;
+        }
+        
+        h1 {
+            font-size: 36px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        
+        .tagline {
+            font-size: 18px;
+            background-color: rgba(255, 193, 7, 0.2);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        
+        .date-display {
+            background-color: #e8eaf6;
+            color: #1a237e;
+            padding: 15px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            border-bottom: 1px solid #c5cae9;
+        }
+        
+        .game-results {
+            padding: 20px;
+        }
+        
+        .game-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #1a237e;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #ddd;
+        }
+        
+        .game-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a237e;
+        }
+        
+        .game-time {
+            font-size: 18px;
+            font-weight: 600;
+            color: #555;
+            background-color: #e3f2fd;
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+        
+        .results-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .result-box {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .result-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-title i {
+            margin-right: 10px;
+            color: #1a237e;
+        }
+        
+        .open-numbers {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .number {
+            background-color: #1a237e;
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(26, 35, 126, 0.3);
+        }
+        
+        .jodi-numbers {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .jodi-number {
+            background-color: #ffc107;
+            color: #1a237e;
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+        }
+        
+        .empty-result {
+            color: #999;
+            font-style: italic;
+            font-size: 18px;
+            padding: 15px 0;
+        }
+        
+        .notice {
+            background-color: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+        
+        .notice h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .notice h3 i {
+            margin-right: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #777;
+            font-size: 16px;
+            border-top: 1px solid #eee;
+            background-color: #f9f9f9;
+        }
+        
+        .disclaimer {
+            font-size: 14px;
+            color: #999;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .game-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .game-time {
+                margin-top: 10px;
+            }
+            
+            .results-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .number, .jodi-number {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="container">
+        <header>
+            <div class="brand">
+                <div class="logo">
+                    <i class="fas fa-dice"></i>
+                </div>
+                <h1>SHRIMATKABOSS</h1>
+            </div>
+            <div class="tagline">DAILY (FREE FREE FREE) GAME</div>
+        </header>
+        
+        <div class="date-display">
+            <i class="fas fa-calendar-alt"></i> DATE: 12/01/2026
+        </div>
+        
+        <div class="game-results">
+            <!-- SRIDEVI Game -->
+            <div class="game-card">
+                <div class="game-header">
+                    <div class="game-name">SRIDEVI</div>
+                    <div class="game-time"><i class="far fa-clock"></i> TIME: 10.00 AM</div>
+                </div>
+                <div class="results-container">
+                    <div class="result-box">
+                        <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
+                        <div class="open-numbers">
+                            <div class="number">2</div>
+                            <div class="number">7</div>
+                            <div class="number">5</div>
+                            <div class="number">0</div>
+                        </div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title"><i class="fas fa-link"></i> JODI</div>
+                        <div class="jodi-numbers">
+                            <div class="jodi-number">25</div>
+                            <div class="jodi-number">70</div>
+                            <div class="jodi-number">52</div>
+                            <div class="jodi-number">07</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MILAN DAY Game -->
+            <div class="game-card">
+                <div class="game-header">
+                    <div class="game-name">MILAN DAY</div>
+                    <div class="game-time"><i class="far fa-clock"></i> TIME: 01.30 PM</div>
+                </div>
+                <div class="results-container">
+                    <div class="result-box">
+                        <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
+                        <div class="empty-result">Result Awaited</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title"><i class="fas fa-link"></i> JODI</div>
+                        <div class="empty-result">Result Awaited</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- KALYAN Game -->
+            <div class="game-card">
+                <div class="game-header">
+                    <div class="game-name">KALYAN</div>
+                    <div class="game-time"><i class="far fa-clock"></i> TIME: 02.30 PM</div>
+                </div>
+                <div class="results-container">
+                    <div class="result-box">
+                        <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
+                        <div class="empty-result">Result Awaited</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title"><i class="fas fa-link"></i> JODI</div>
+                        <div class="empty-result">Result Awaited</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SRIDEVI NIGHT Game -->
+            <div class="game-card">
+                <div class="game-header">
+                    <div class="game-name">SRIDEVI NIGHT</div>
+                    <div class="game-time"><i class="far fa-clock"></i> TIME: 06.30 PM</div>
+                </div>
+                <div class="results-container">
+                    <div class="result-box">
+                        <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
+                        <div class="empty-result">Result Awaited</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title"><i class="fas fa-link"></i> JODI</div>
+                        <div class="empty-result">Result Awaited</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MILAN NIGHT Game -->
+            <div class="game-card">
+                <div class="game-header">
+                    <div class="game-name">MILAN NIGHT</div>
+                    <div class="game-time"><i class="far fa-clock"></i> TIME: 08.00 PM</div>
+                </div>
+                <div class="results-container">
+                    <div class="result-box">
+                        <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
+                        <div class="empty-result">Result Awaited</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title"><i class="fas fa-link"></i> JODI</div>
+                        <div class="empty-result">Result Awaited</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MAIN BAZAR Game -->
+            <div class="game-card">
+                <div class="game-header">
+                    <div class="game-name">MAIN BAZAR</div>
+                    <div class="game-time"><i class="far fa-clock"></i> TIME: 08.30 PM</div>
+                </div>
+                <div class="results-container">
+                    <div class="result-box">
+                        <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
+                        <div class="empty-result">Result Awaited</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-title"><i class="fas fa-link"></i> JODI</div>
+                        <div class="empty-result">Result Awaited</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="notice">
+                <h3><i class="fas fa-info-circle"></i> Important Notice</h3>
+                <p>Results are updated as soon as they are declared. For the games with "Result Awaited", please check back after the scheduled time. All results displayed here are for informational purposes only.</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>SHRIMATKABOSS &copy; 2026 | Daily Game Results</p>
+            <div class="disclaimer">
+                <p><strong>Disclaimer:</strong> This is a demonstration page for a fictional game results display. Gambling may be illegal in your jurisdiction. Please play responsibly and within legal boundaries.</p>
+            </div>
+        </footer>
+    </div>
 
-<div class="box">
-  <h2>Dashboard</h2>
-  <button onclick="goMembers()">Members</button>
-</div>
-
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyA8qJwI0ZWV30JKq2eB8yv-LsMRjz6INLg",
-    authDomain: "shreematkaboss.firebaseapp.com",
-    projectId: "shreematkaboss",
-    storageBucket: "shreematkaboss.firebasestorage.app",
-    messagingSenderId: "1004401076062",
-    appId: "1:1004401076062:web:e7e587eefd3483b7c5d1cf"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-
-  // Protect page: redirect to login if not logged in
-  auth.onAuthStateChanged(user => {
-    if (!user) {
-      window.location.href = "index.html";
-    }
-  });
-
-  // Open Google Sites page
-  function goMembers() {
-    window.location.href = "https://sites.google.com/view/vipmembershipmatka/home";
-  }
-</script>
-
+    <script>
+        // Add a simple animation for numbers when they are updated
+        document.addEventListener('DOMContentLoaded', function() {
+            const numbers = document.querySelectorAll('.number, .jodi-number');
+            
+            numbers.forEach(number => {
+                // Add a subtle animation on page load
+                number.style.opacity = '0';
+                number.style.transform = 'scale(0.8)';
+                
+                setTimeout(() => {
+                    number.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    number.style.opacity = '1';
+                    number.style.transform = 'scale(1)';
+                }, 100);
+            });
+            
+            // Simulate live updates for demonstration purposes
+            const updateTime = 5000; // 5 seconds for demo
+            
+            // Function to simulate a result update
+            function simulateUpdate() {
+                const emptyResults = document.querySelectorAll('.empty-result');
+                if (emptyResults.length > 0) {
+                    // Update the first pending result
+                    const firstEmpty = emptyResults[0];
+                    const parentBox = firstEmpty.closest('.result-box');
+                    
+                    if (parentBox.querySelector('.result-title').textContent.includes('OPEN')) {
+                        // Replace with open numbers
+                        parentBox.innerHTML = `
+                            <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
+                            <div class="open-numbers">
+                                <div class="number">${Math.floor(Math.random() * 10)}</div>
+                                <div class="number">${Math.floor(Math.random() * 10)}</div>
+                                <div class="number">${Math.floor(Math.random() * 10)}</div>
+                                <div class="number">${Math.floor(Math.random() * 10)}</div>
+                            </div>
+                        `;
+                    } else {
+                        // Replace with jodi numbers
+                        parentBox.innerHTML = `
+                            <div class="result-title"><i class="fas fa-link"></i> JODI</div>
+                            <div class="jodi-numbers">
+                                <div class="jodi-number">${Math.floor(Math.random() * 90) + 10}</div>
+                                <div class="jodi-number">${Math.floor(Math.random() * 90) + 10}</div>
+                                <div class="jodi-number">${Math.floor(Math.random() * 90) + 10}</div>
+                                <div class="jodi-number">${Math.floor(Math.random() * 90) + 10}</div>
+                            </div>
+                        `;
+                    }
+                    
+                    // Animate the new numbers
+                    const newNumbers = parentBox.querySelectorAll('.number, .jodi-number');
+                    newNumbers.forEach(number => {
+                        number.style.opacity = '0';
+                        number.style.transform = 'scale(0.8)';
+                        
+                        setTimeout(() => {
+                            number.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                            number.style.opacity = '1';
+                            number.style.transform = 'scale(1)';
+                        }, 100);
+                    });
+                    
+                    // Show a notification
+                    showNotification('New result updated!');
+                }
+            }
+            
+            // Show notification function
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.textContent = message;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #4caf50;
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                    z-index: 1000;
+                    font-weight: 600;
+                    animation: slideIn 0.3s ease;
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+            
+            // Add CSS for notification animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // For demo purposes: simulate updates every 10 seconds
+            // setInterval(simulateUpdate, 10000);
+        });
+    </script>
 </body>
-</html>
+                          </html>
