@@ -25,7 +25,7 @@
         
         .dashboard-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1100px;
             background: linear-gradient(145deg, #121d33, #0a1324);
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
@@ -100,13 +100,29 @@
             padding: 40px;
         }
         
+        .balance-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .balance-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
         .balance-card {
             background: linear-gradient(145deg, #1a243f, #15203a);
             border-radius: 16px;
             padding: 30px;
-            margin-bottom: 40px;
             border: 1px solid #2a3a5e;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .balance-card.main-balance {
+            background: linear-gradient(135deg, #1a243f, #1e2a44);
         }
         
         .balance-label {
@@ -129,6 +145,7 @@
             display: flex;
             align-items: baseline;
             gap: 8px;
+            margin-bottom: 5px;
         }
         
         .currency-symbol {
@@ -136,129 +153,116 @@
             font-size: 32px;
         }
         
-        .transactions-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+        .balance-subtext {
+            color: #8a94a6;
+            font-size: 14px;
         }
         
-        .transaction-card {
+        .send-receive-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .send-btn, .receive-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .send-btn {
+            background: linear-gradient(135deg, #f0b90b, #d6a309);
+            color: #0b1426;
+        }
+        
+        .send-btn:hover {
+            background: linear-gradient(135deg, #e2ad0a, #c59508);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(240, 185, 11, 0.3);
+        }
+        
+        .receive-btn {
+            background: linear-gradient(135deg, #26a17b, #1d8a6a);
+            color: white;
+        }
+        
+        .receive-btn:hover {
+            background: linear-gradient(135deg, #21946f, #187155);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(38, 161, 123, 0.3);
+        }
+        
+        .transfer-balance-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .transfer-balance-card {
             background: linear-gradient(145deg, #1a243f, #15203a);
             border-radius: 16px;
             padding: 25px;
             border: 1px solid #2a3a5e;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        .transaction-header {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            gap: 20px;
         }
         
-        .transaction-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #eaecef;
-        }
-        
-        .transaction-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #2a3a5e, #3a4b7c);
-            border-radius: 12px;
+        .transfer-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 24px;
+        }
+        
+        .send-icon {
+            background: linear-gradient(135deg, rgba(240, 185, 11, 0.2), rgba(214, 163, 9, 0.1));
             color: #f0b90b;
         }
         
-        .transaction-detail {
-            margin-bottom: 20px;
+        .receive-icon {
+            background: linear-gradient(135deg, rgba(38, 161, 123, 0.2), rgba(29, 138, 106, 0.1));
+            color: #26a17b;
         }
         
-        .detail-label {
+        .transfer-details {
+            flex: 1;
+        }
+        
+        .transfer-label {
             font-size: 14px;
             color: #8a94a6;
             margin-bottom: 5px;
         }
         
-        .detail-value {
-            font-size: 24px;
-            font-weight: 600;
+        .transfer-amount {
+            font-size: 28px;
+            font-weight: 700;
             color: #ffffff;
-        }
-        
-        .detail-value.rupees {
-            color: #26a17b;
-        }
-        
-        .detail-value.commission {
-            color: #f0b90b;
-        }
-        
-        .empty-transaction {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 0;
+            align-items: baseline;
+        }
+        
+        .transfer-currency {
             color: #8a94a6;
-        }
-        
-        .empty-transaction i {
-            font-size: 48px;
-            margin-bottom: 15px;
-            color: #3a4b7c;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 20px 40px;
-            background-color: #1a243f;
-            border-top: 1px solid #2a3a5e;
-            color: #8a94a6;
-            font-size: 14px;
-        }
-        
-        .highlight {
-            color: #f0b90b;
-            font-weight: 600;
-        }
-        
-        .currency {
             font-size: 16px;
-            color: #8a94a6;
             margin-left: 5px;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-            
-            .main-content {
-                padding: 25px;
-            }
-            
-            .balance-amount {
-                font-size: 36px;
-            }
-            
-            .transactions-container {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
-<body>
+    <body>
     <div class="dashboard-container">
         <div class="header">
             <div class="logo">
@@ -274,16 +278,141 @@
         </div>
         
         <div class="main-content">
-            <div class="balance-card">
-                <div class="balance-label">
-                    <i class="fas fa-wallet"></i>
-                    CURRENT BALANCE
+            <div class="balance-section">
+                <div class="balance-card main-balance">
+                    <div class="balance-label">
+                        <i class="fas fa-wallet"></i>
+                        CURRENT BALANCE
+                    </div>
+                    <div class="balance-amount">
+                        <span class="currency-symbol">$</span>
+                        <span id="main-balance">401</span>
+                    </div>
+                    <div class="balance-subtext">Available for trading, sending, and receiving</div>
+                    
+                    <div class="send-receive-container">
+                        <button class="send-btn" id="open-send-modal">
+                            <i class="fas fa-paper-plane"></i>
+                            Send
+                        </button>
+                        <button class="receive-btn" id="open-receive-modal">
+                            <i class="fas fa-qrcode"></i>
+                            Receive
+                        </button>
+                    </div>
                 </div>
-                <div class="balance-amount">
-                    <span class="currency-symbol">$</span>
-                    <span>401</span>
+                
+                <div class="transfer-balance-container">
+                    <div class="transfer-balance-card">
+                        <div class="transfer-icon send-icon">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="transfer-details">
+                            <div class="transfer-label">SENT THIS MONTH</div>
+                            <div class="transfer-amount">
+                                $ <span id="sent-amount">824</span>
+                                <span class="transfer-currency">(₹ 74,250)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="transfer-balance-card">
+                        <div class="transfer-icon receive-icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="transfer-details">
+                            <div class="transfer-label">RECEIVED THIS MONTH</div>
+                            <div class="transfer-amount">
+                                $ <span id="received-amount">982</span>
+                                <span class="transfer-currency">(₹ 88,253)</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
+            <style>
+                .transactions-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 30px;
+                    margin-bottom: 40px;
+                }
+                
+                .transaction-card {
+                    background: linear-gradient(145deg, #1a243f, #15203a);
+                    border-radius: 16px;
+                    padding: 25px;
+                    border: 1px solid #2a3a5e;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+                
+                .transaction-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 25px;
+                }
+                
+                .transaction-title {
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #eaecef;
+                }
+                
+                .transaction-icon {
+                    width: 50px;
+                    height: 50px;
+                    background: linear-gradient(135deg, #2a3a5e, #3a4b7c);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 22px;
+                    color: #f0b90b;
+                }
+                
+                .transaction-detail {
+                    margin-bottom: 20px;
+                }
+                
+                .detail-label {
+                    font-size: 14px;
+                    color: #8a94a6;
+                    margin-bottom: 5px;
+                }
+                
+                .detail-value {
+                    font-size: 24px;
+                    font-weight: 600;
+                    color: #ffffff;
+                }
+                
+                .detail-value.rupees {
+                    color: #26a17b;
+                }
+                
+                .detail-value.commission {
+                    color: #f0b90b;
+                }
+                
+                .empty-transaction {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 20px 0;
+                    color: #8a94a6;
+                }
+                
+                .empty-transaction i {
+                    font-size: 48px;
+                    margin-bottom: 15px;
+                    color: #3a4b7c;
+                }
+            </style>
             
             <div class="transactions-container">
                 <div class="transaction-card">
@@ -330,34 +459,262 @@
                 </div>
             </div>
         </div>
+            <style>
+        .footer {
+            text-align: center;
+            padding: 20px 40px;
+            background-color: #1a243f;
+            border-top: 1px solid #2a3a5e;
+            color: #8a94a6;
+            font-size: 14px;
+        }
         
-        <div class="footer">
-            <p>Data updated in real-time | This is a UI representation of the provided transaction summary</p>
-            <p>For actual account details, please visit your <span class="highlight">Binance account</span></p>
+        .highlight {
+            color: #f0b90b;
+            font-weight: 600;
+        }
+        
+        .currency {
+            font-size: 16px;
+            color: #8a94a6;
+            margin-left: 5px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(145deg, #1a243f, #15203a);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid #2a3a5e;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #eaecef;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: #8a94a6;
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #f0b90b;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #8a94a6;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            background-color: #0b1426;
+            border: 1px solid #2a3a5e;
+            border-radius: 10px;
+            color: #eaecef;
+            font-size: 16px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #f0b90b;
+        }
+        
+        .modal-btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .modal-send-btn {
+            background: linear-gradient(135deg, #f0b90b, #d6a309);
+            color: #0b1426;
+        }
+        
+        .modal-send-btn:hover {
+            background: linear-gradient(135deg, #e2ad0a, #c59508);
+        }
+        
+        .modal-receive-btn {
+            background: linear-gradient(135deg, #26a17b, #1d8a6a);
+            color: white;
+        }
+        
+        .modal-receive-btn:hover {
+            background: linear-gradient(135deg, #21946f, #187155);
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .main-content {
+                padding: 25px;
+            }
+            
+            .balance-amount {
+                font-size: 36px;
+            }
+            
+            .transactions-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <div class="footer">
+        <p>Data updated in real-time | This is a UI representation of the provided transaction summary</p>
+        <p>For actual account details, please visit your <span class="highlight">Binance account</span></p>
+    </div>
+</div>
+
+<!-- Send Modal -->
+<div class="modal" id="send-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title">Send Funds</div>
+            <button class="close-modal" id="close-send-modal">&times;</button>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="send-amount">Amount (USD)</label>
+            <input type="number" id="send-amount" class="form-input" placeholder="Enter amount to send" min="1" max="401" value="50">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="send-address">Recipient Wallet Address</label>
+            <input type="text" id="send-address" class="form-input" placeholder="Enter wallet address" value="0x71C7656EC7ab88b098defB751B7401B5f6d8976F">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="send-note">Note (Optional)</label>
+            <input type="text" id="send-note" class="form-input" placeholder="Add a note for this transaction">
+        </div>
+        <button class="modal-btn modal-send-btn" id="confirm-send">Send Now</button>
+    </div>
+</div>
+
+<!-- Receive Modal -->
+<div class="modal" id="receive-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title">Receive Funds</div>
+            <button class="close-modal" id="close-receive-modal">&times;</button>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Your Wallet Address</label>
+            <div style="background-color: #0b1426; padding: 15px; border-radius: 10px; border: 1px solid #2a3a5e; word-break: break-all; font-family: monospace;">
+                0x9aE4764f5D4dA3A6BfD5fE5f86C8d1C3C3B3d3E2
+            </div>
+        </div>
+        <div class="form-group" style="text-align: center; margin: 30px 0;">
+            <div style="width: 200px; height: 200px; background-color: white; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                <div style="color: #0b1426; font-weight: bold; text-align: center;">
+                    <div style="margin-bottom: 10px;">QR CODE</div>
+                    <div style="font-size: 12px;">Scan to receive funds</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Share your address</label>
+            <div style="display: flex; gap: 10px;">
+                <button class="modal-btn" style="flex: 1; background-color: #3a4b7c; color: white;" id="copy-address">
+                    <i class="fas fa-copy"></i> Copy Address
+                </button>
+                <button class="modal-btn" style="flex: 1; background-color: #3a4b7c; color: white;">
+                    <i class="fas fa-share-alt"></i> Share
+                </button>
+            </div>
         </div>
     </div>
-
-    <script>
-        // Simple script to add subtle animation effects
-        document.addEventListener('DOMContentLoaded', function() {
-            const balanceElement = document.querySelector('.balance-amount span:nth-child(2)');
+</div>
+            <script>
+        // Initialize balances
+        let mainBalance = 401;
+        let sentAmount = 824;
+        let receivedAmount = 982;
+        
+        // DOM elements
+        const mainBalanceElement = document.getElementById('main-balance');
+        const sentAmountElement = document.getElementById('sent-amount');
+        const receivedAmountElement = document.getElementById('received-amount');
+        
+        // Modal elements
+        const sendModal = document.getElementById('send-modal');
+        const receiveModal = document.getElementById('receive-modal');
+        const openSendModalBtn = document.getElementById('open-send-modal');
+        const openReceiveModalBtn = document.getElementById('open-receive-modal');
+        const closeSendModalBtn = document.getElementById('close-send-modal');
+        const closeReceiveModalBtn = document.getElementById('close-receive-modal');
+        const confirmSendBtn = document.getElementById('confirm-send');
+        const sendAmountInput = document.getElementById('send-amount');
+        const copyAddressBtn = document.getElementById('copy-address');
+        
+        // Animate the balance count on load
+        function animateBalance(element, targetValue, duration = 1000) {
+            let startValue = 0;
+            let increment = targetValue / (duration / 20);
+            let currentValue = 0;
             
-            // Animate the balance count on load
-            let balance = 401;
-            let displayedBalance = 0;
-            const balanceIncrement = balance / 20;
-            
-            const balanceInterval = setInterval(() => {
-                displayedBalance += balanceIncrement;
-                if (displayedBalance >= balance) {
-                    displayedBalance = balance;
-                    clearInterval(balanceInterval);
+            const timer = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= targetValue) {
+                    currentValue = targetValue;
+                    clearInterval(timer);
                 }
-                balanceElement.textContent = Math.round(displayedBalance);
-            }, 50);
+                element.textContent = Math.round(currentValue);
+            }, 20);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate all balances
+            animateBalance(mainBalanceElement, mainBalance);
+            animateBalance(sentAmountElement, sentAmount);
+            animateBalance(receivedAmountElement, receivedAmount);
             
             // Add hover effects to cards
-            const cards = document.querySelectorAll('.transaction-card');
+            const cards = document.querySelectorAll('.transaction-card, .transfer-balance-card');
             cards.forEach(card => {
                 card.addEventListener('mouseenter', function() {
                     this.style.transform = 'translateY(-5px)';
@@ -369,6 +726,102 @@
                 });
             });
         });
+        
+        // Modal event handlers
+        openSendModalBtn.addEventListener('click', () => {
+            sendModal.style.display = 'flex';
+        });
+        
+        openReceiveModalBtn.addEventListener('click', () => {
+            receiveModal.style.display = 'flex';
+        });
+        
+        closeSendModalBtn.addEventListener('click', () => {
+            sendModal.style.display = 'none';
+        });
+        
+        closeReceiveModalBtn.addEventListener('click', () => {
+            receiveModal.style.display = 'none';
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === sendModal) {
+                sendModal.style.display = 'none';
+            }
+            if (event.target === receiveModal) {
+                receiveModal.style.display = 'none';
+            }
+        });
+        
+        // Handle send transaction
+        confirmSendBtn.addEventListener('click', () => {
+            const sendAmount = parseFloat(sendAmountInput.value);
+            const sendAddress = document.getElementById('send-address').value;
+            
+            if (sendAmount <= 0 || isNaN(sendAmount)) {
+                alert('Please enter a valid amount');
+                return;
+            }
+            
+            if (sendAmount > mainBalance) {
+                alert('Insufficient balance! You cannot send more than your available balance.');
+                return;
+            }
+            
+            if (!sendAddress || sendAddress.length < 10) {
+                alert('Please enter a valid wallet address');
+                return;
+            }
+            
+            // Update balances
+            mainBalance -= sendAmount;
+            sentAmount += sendAmount;
+            
+            // Update UI
+            mainBalanceElement.textContent = mainBalance.toFixed(0);
+            sentAmountElement.textContent = sentAmount.toFixed(0);
+            
+            // Show success message
+            alert(`Successfully sent $${sendAmount} to ${sendAddress.substring(0, 12)}...`);
+            
+            // Close modal
+            sendModal.style.display = 'none';
+            
+            // Reset form
+            sendAmountInput.value = "50";
+        });
+        
+        // Handle copy address
+        copyAddressBtn.addEventListener('click', () => {
+            const address = "0x9aE4764f5D4dA3A6BfD5fE5f86C8d1C3C3B3d3E2";
+            navigator.clipboard.writeText(address).then(() => {
+                // Show feedback
+                const originalText = copyAddressBtn.innerHTML;
+                copyAddressBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                copyAddressBtn.style.backgroundColor = '#26a17b';
+                
+                setTimeout(() => {
+                    copyAddressBtn.innerHTML = originalText;
+                    copyAddressBtn.style.backgroundColor = '';
+                }, 2000);
+            });
+        });
+        
+        // Input validation for send amount
+        sendAmountInput.addEventListener('input', () => {
+            const maxAmount = mainBalance;
+            const currentAmount = parseFloat(sendAmountInput.value);
+            
+            if (currentAmount > maxAmount) {
+                sendAmountInput.value = maxAmount;
+            }
+            
+            if (currentAmount < 0) {
+                sendAmountInput.value = 0;
+            }
+        });
     </script>
 </body>
 </html>
+
