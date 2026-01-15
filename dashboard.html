@@ -3,567 +3,372 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHRIMATKABOSS - Daily Game Results</title>
+    <title>Binance Dashboard - Transaction Summary</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
         
         body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .container {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
-            color: white;
-            padding: 25px 30px;
-            text-align: center;
-            border-bottom: 5px solid #ffc107;
-        }
-        
-        .brand {
+            background-color: #0b1426;
+            color: #eaecef;
+            min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
-            margin-bottom: 10px;
-        }
-        
-        .logo {
-            font-size: 32px;
-            margin-right: 15px;
-            color: #ffc107;
-        }
-        
-        h1 {
-            font-size: 36px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-        
-        .tagline {
-            font-size: 18px;
-            background-color: rgba(255, 193, 7, 0.2);
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 30px;
-            margin-top: 10px;
-            font-weight: 600;
-        }
-        
-        .date-display {
-            background-color: #e8eaf6;
-            color: #1a237e;
-            padding: 15px;
-            text-align: center;
-            font-size: 22px;
-            font-weight: 700;
-            border-bottom: 1px solid #c5cae9;
-        }
-        
-        .game-results {
+            align-items: center;
             padding: 20px;
         }
         
-        .game-card {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-left: 5px solid #1a237e;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .dashboard-container {
+            width: 100%;
+            max-width: 900px;
+            background: linear-gradient(145deg, #121d33, #0a1324);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid #1e2a44;
         }
         
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .game-header {
+        .header {
+            background-color: #1a243f;
+            padding: 25px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px dashed #ddd;
+            border-bottom: 1px solid #2a3a5e;
         }
         
-        .game-name {
-            font-size: 24px;
-            font-weight: 700;
-            color: #1a237e;
-        }
-        
-        .game-time {
-            font-size: 18px;
-            font-weight: 600;
-            color: #555;
-            background-color: #e3f2fd;
-            padding: 8px 16px;
-            border-radius: 6px;
-        }
-        
-        .results-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-        
-        .result-box {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .result-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 10px;
+        .logo {
             display: flex;
             align-items: center;
+            gap: 12px;
         }
         
-        .result-title i {
-            margin-right: 10px;
-            color: #1a237e;
-        }
-        
-        .open-numbers {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .number {
-            background-color: #1a237e;
-            color: white;
-            width: 70px;
-            height: 70px;
+        .logo-icon {
+            background: linear-gradient(135deg, #f0b90b, #f8d12f);
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #0b1426;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .logo-text {
             font-size: 28px;
             font-weight: 700;
-            box-shadow: 0 5px 15px rgba(26, 35, 126, 0.3);
+            background: linear-gradient(135deg, #f0b90b, #f8d12f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 0.5px;
         }
         
-        .jodi-numbers {
+        .user-info {
             display: flex;
+            align-items: center;
             gap: 15px;
-            flex-wrap: wrap;
         }
         
-        .jodi-number {
-            background-color: #ffc107;
-            color: #1a237e;
-            width: 70px;
-            height: 70px;
-            border-radius: 10px;
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #3a4b7c, #2a3a5e);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            font-weight: 700;
-            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+            font-size: 20px;
+            color: #f0b90b;
+            border: 2px solid #3a4b7c;
         }
         
-        .empty-result {
-            color: #999;
-            font-style: italic;
+        .user-name {
             font-size: 18px;
-            padding: 15px 0;
+            font-weight: 600;
+            color: #eaecef;
         }
         
-        .notice {
-            background-color: #e8f5e9;
-            border-left: 5px solid #4caf50;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 8px;
+        .main-content {
+            padding: 40px;
         }
         
-        .notice h3 {
-            color: #2e7d32;
-            margin-bottom: 10px;
+        .balance-card {
+            background: linear-gradient(145deg, #1a243f, #15203a);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid #2a3a5e;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .balance-label {
+            font-size: 16px;
+            color: #8a94a6;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
+            gap: 10px;
         }
         
-        .notice h3 i {
-            margin-right: 10px;
+        .balance-label i {
+            color: #f0b90b;
         }
         
-        footer {
-            text-align: center;
+        .balance-amount {
+            font-size: 42px;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        
+        .currency-symbol {
+            color: #f0b90b;
+            font-size: 32px;
+        }
+        
+        .transactions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .transaction-card {
+            background: linear-gradient(145deg, #1a243f, #15203a);
+            border-radius: 16px;
             padding: 25px;
-            color: #777;
-            font-size: 16px;
-            border-top: 1px solid #eee;
-            background-color: #f9f9f9;
+            border: 1px solid #2a3a5e;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
-        .disclaimer {
+        .transaction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .transaction-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #eaecef;
+        }
+        
+        .transaction-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2a3a5e, #3a4b7c);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #f0b90b;
+        }
+        
+        .transaction-detail {
+            margin-bottom: 20px;
+        }
+        
+        .detail-label {
             font-size: 14px;
-            color: #999;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.5;
+            color: #8a94a6;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        
+        .detail-value.rupees {
+            color: #26a17b;
+        }
+        
+        .detail-value.commission {
+            color: #f0b90b;
+        }
+        
+        .empty-transaction {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+            color: #8a94a6;
+        }
+        
+        .empty-transaction i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #3a4b7c;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px 40px;
+            background-color: #1a243f;
+            border-top: 1px solid #2a3a5e;
+            color: #8a94a6;
+            font-size: 14px;
+        }
+        
+        .highlight {
+            color: #f0b90b;
+            font-weight: 600;
+        }
+        
+        .currency {
+            font-size: 16px;
+            color: #8a94a6;
+            margin-left: 5px;
         }
         
         @media (max-width: 768px) {
-            .game-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .game-time {
-                margin-top: 10px;
-            }
-            
-            .results-container {
+            .header {
                 flex-direction: column;
                 gap: 20px;
+                text-align: center;
             }
             
-            .number, .jodi-number {
-                width: 60px;
-                height: 60px;
-                font-size: 24px;
+            .main-content {
+                padding: 25px;
             }
             
-            h1 {
-                font-size: 28px;
+            .balance-amount {
+                font-size: 36px;
+            }
+            
+            .transactions-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="brand">
-                <div class="logo">
-                    <i class="fas fa-dice"></i>
-                </div>
-                <h1>SHRIMATKABOSS</h1>
+    <div class="dashboard-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">B</div>
+                <div class="logo-text">BINANCE</div>
             </div>
-            <div class="tagline">DAILY (FREE FREE FREE) GAME</div>
-        </header>
-        
-        <div class="date-display">
-            <i class="fas fa-calendar-alt"></i> DATE: 12/01/2026
-        </div>
-        
-        <div class="game-results">
-            <!-- SRIDEVI Game -->
-            <div class="game-card">
-                <div class="game-header">
-                    <div class="game-name">SRIDEVI</div>
-                    <div class="game-time"><i class="far fa-clock"></i> TIME: 10.00 AM</div>
+            <div class="user-info">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
                 </div>
-                <div class="results-container">
-                    <div class="result-box">
-                        <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
-                        <div class="open-numbers">
-                            <div class="number"></div>
-                            <div class="number"></div>
-                            <div class="number"></div>
-                            <div class="number"></div>
-                        </div>
-                    </div>
-                    <div class="result-box">
-                        <div class="result-title"><i class="fas fa-link"></i> JODI</div>
-                        <div class="jodi-numbers">
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- MILAN DAY Game -->
-            <div class="game-card">
-                <div class="game-header">
-                    <div class="game-name">MILAN DAY</div>
-                    <div class="game-time"><i class="far fa-clock"></i> TIME: 01.30 PM</div>
-                </div>
-                <div class="results-container">
-                    <div class="result-box">
-                        <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
-                        <div class="open-numbers">
-                            <div class="number"></div>
-                            <div class="number"></div>
-                            <div class="number"></div>
-                            <div class="number"></div>
-                        </div>
-                    </div>
-                    <div class="result-box">
-                        <div class="result-title"><i class="fas fa-link"></i> JODI</div>
-                        <div class="jodi-numbers">
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- KALYAN Game -->
-            <div class="game-card">
-                <div class="game-header">
-                    <div class="game-name">KALYAN</div>
-                    <div class="game-time"><i class="far fa-clock"></i> TIME: 02.00 PM</div>
-                </div>
-                <div class="results-container">
-                    <div class="result-box">
-                        <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
-                        <div class="open-numbers">
-                            <div class="number"></div>
-                            <div class="number"></div>
-                            <div class="number"></div>
-                            <div class="number"></div>
-                        </div>
-                    </div>
-                    <div class="result-box">
-                        <div class="result-title"><i class="fas fa-link"></i> JODI</div>
-                        <div class="jodi-numbers">
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- SRIDEVI NIGHT Game -->
-            <div class="game-card">
-                <div class="game-header">
-                    <div class="game-name">SRIDEVI NIGHT</div>
-                    <div class="game-time"><i class="far fa-clock"></i> TIME: 06.00 PM</div>
-                </div>
-                <div class="results-container">
-                    <div class="result-box">
-                        <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
-                        <div class="open-numbers">
-                            <div class="number"></div>
-                            <div class="number"></div>
-                            <div class="number"></div>
-                            <div class="number"></div>
-                        </div>
-                    </div>
-                    <div class="result-box">
-                        <div class="result-title"><i class="fas fa-link"></i> JODI</div>
-                        <div class="jodi-numbers">
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- MILAN NIGHT Game -->
-            <div class="game-card">
-                <div class="game-header">
-                    <div class="game-name">MILAN NIGHT</div>
-                    <div class="game-time"><i class="far fa-clock"></i> TIME: 08.00 PM</div>
-                </div>
-                <div class="results-container">
-                    <div class="result-box">
-                        <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
-                        <div class="open-numbers">
-                            <div class="number"></div>
-                            <div class="number"></div>
-                            <div class="number"></div>
-                            <div class="number"></div>
-                        </div>
-                    </div>
-                    <div class="result-box">
-                        <div class="result-title"><i class="fas fa-link"></i> JODI</div>
-                        <div class="jodi-numbers">
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- MAIN BAZAR Game -->
-            <div class="game-card">
-                <div class="game-header">
-                    <div class="game-name">MAIN BAZAR</div>
-                    <div class="game-time"><i class="far fa-clock"></i> TIME: 08.30 PM</div>
-                </div>
-                <div class="results-container">
-                    <div class="result-box">
-                        <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
-                        <div class="open-numbers">
-                            <div class="number"></div>
-                            <div class="number"></div>
-                            <div class="number"></div>
-                            <div class="number"></div>
-                        </div>
-                    </div>
-                    <div class="result-box">
-                        <div class="result-title"><i class="fas fa-link"></i> JODI</div>
-                        <div class="jodi-numbers">
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                            <div class="jodi-number"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="notice">
-                <h3><i class="fas fa-info-circle"></i> Important Notice</h3>
-                <p>Results are updated as soon as they are declared. For the games with "Result Awaited", please check back after the scheduled time. All results displayed here are for informational purposes only.</p>
+                <div class="user-name">GANESH SIDDHARTH PATIL</div>
             </div>
         </div>
         
-        <footer>
-            <p>SHRIMATKABOSS &copy; 2026 | Daily Game Results</p>
-            <div class="disclaimer">
-                <p><strong>Disclaimer:</strong> This is a demonstration page for a fictional game results display. Gambling may be illegal in your jurisdiction. Please play responsibly and within legal boundaries.</p>
+        <div class="main-content">
+            <div class="balance-card">
+                <div class="balance-label">
+                    <i class="fas fa-wallet"></i>
+                    CURRENT BALANCE
+                </div>
+                <div class="balance-amount">
+                    <span class="currency-symbol">$</span>
+                    <span>401</span>
+                </div>
             </div>
-        </footer>
+            
+            <div class="transactions-container">
+                <div class="transaction-card">
+                    <div class="transaction-header">
+                        <div class="transaction-title">LAST TRANSACTION</div>
+                        <div class="transaction-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="empty-transaction">
+                        <i class="fas fa-ban"></i>
+                        <div>NO TRANSACTION</div>
+                    </div>
+                </div>
+                
+                <div class="transaction-card">
+                    <div class="transaction-header">
+                        <div class="transaction-title">MONTHLY TRANSACTIONS</div>
+                        <div class="transaction-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="transaction-detail">
+                        <div class="detail-label">Total amount of transaction this month</div>
+                        <div class="detail-value">$ 1,806.00</div>
+                        <div class="detail-value rupees">₹ 1,62,503.00</div>
+                    </div>
+                </div>
+                
+                <div class="transaction-card">
+                    <div class="transaction-header">
+                        <div class="transaction-title">MONTHLY COMMISSION</div>
+                        <div class="transaction-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="transaction-detail">
+                        <div class="detail-label">Total commission earned this month</div>
+                        <div class="detail-value commission">₹ 6,500.36</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Data updated in real-time | This is a UI representation of the provided transaction summary</p>
+            <p>For actual account details, please visit your <span class="highlight">Binance account</span></p>
+        </div>
     </div>
 
     <script>
-        // Add a simple animation for numbers when they are updated
+        // Simple script to add subtle animation effects
         document.addEventListener('DOMContentLoaded', function() {
-            const numbers = document.querySelectorAll('.number, .jodi-number');
+            const balanceElement = document.querySelector('.balance-amount span:nth-child(2)');
             
-            numbers.forEach(number => {
-                // Add a subtle animation on page load
-                number.style.opacity = '0';
-                number.style.transform = 'scale(0.8)';
+            // Animate the balance count on load
+            let balance = 401;
+            let displayedBalance = 0;
+            const balanceIncrement = balance / 20;
+            
+            const balanceInterval = setInterval(() => {
+                displayedBalance += balanceIncrement;
+                if (displayedBalance >= balance) {
+                    displayedBalance = balance;
+                    clearInterval(balanceInterval);
+                }
+                balanceElement.textContent = Math.round(displayedBalance);
+            }, 50);
+            
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.transaction-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
                 
-                setTimeout(() => {
-                    number.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                    number.style.opacity = '1';
-                    number.style.transform = 'scale(1)';
-                }, 100);
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
             });
-            
-            // Simulate live updates for demonstration purposes
-            const updateTime = 5000; // 5 seconds for demo
-            
-            // Function to simulate a result update
-            function simulateUpdate() {
-                const emptyResults = document.querySelectorAll('.empty-result');
-                if (emptyResults.length > 0) {
-                    // Update the first pending result
-                    const firstEmpty = emptyResults[0];
-                    const parentBox = firstEmpty.closest('.result-box');
-                    
-                    if (parentBox.querySelector('.result-title').textContent.includes('OPEN')) {
-                        // Replace with open numbers
-                        parentBox.innerHTML = `
-                            <div class="result-title"><i class="fas fa-lock-open"></i> OPEN</div>
-                            <div class="open-numbers">
-                                <div class="number">${Math.floor(Math.random() * 10)}</div>
-                                <div class="number">${Math.floor(Math.random() * 10)}</div>
-                                <div class="number">${Math.floor(Math.random() * 10)}</div>
-                                <div class="number">${Math.floor(Math.random() * 10)}</div>
-                            </div>
-                        `;
-                    } else {
-                        // Replace with jodi numbers
-                        parentBox.innerHTML = `
-                            <div class="result-title"><i class="fas fa-link"></i> JODI</div>
-                            <div class="jodi-numbers">
-                                <div class="jodi-number">${Math.floor(Math.random() * 90) + 10}</div>
-                                <div class="jodi-number">${Math.floor(Math.random() * 90) + 10}</div>
-                                <div class="jodi-number">${Math.floor(Math.random() * 90) + 10}</div>
-                                <div class="jodi-number">${Math.floor(Math.random() * 90) + 10}</div>
-                            </div>
-                        `;
-                    }
-                    
-                    // Animate the new numbers
-                    const newNumbers = parentBox.querySelectorAll('.number, .jodi-number');
-                    newNumbers.forEach(number => {
-                        number.style.opacity = '0';
-                        number.style.transform = 'scale(0.8)';
-                        
-                        setTimeout(() => {
-                            number.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                            number.style.opacity = '1';
-                            number.style.transform = 'scale(1)';
-                        }, 100);
-                    });
-                    
-                    // Show a notification
-                    showNotification('New result updated!');
-                }
-            }
-            
-            // Show notification function
-            function showNotification(message) {
-                const notification = document.createElement('div');
-                notification.textContent = message;
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: #4caf50;
-                    color: white;
-                    padding: 15px 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-                    z-index: 1000;
-                    font-weight: 600;
-                    animation: slideIn 0.3s ease;
-                `;
-                
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.style.animation = 'slideOut 0.3s ease';
-                    setTimeout(() => {
-                        document.body.removeChild(notification);
-                    }, 300);
-                }, 3000);
-            }
-            
-            // Add CSS for notification animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-                @keyframes slideOut {
-                    from { transform: translateX(0); opacity: 1; }
-                    to { transform: translateX(100%); opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-            
-            // For demo purposes: simulate updates every 10 seconds
-            // setInterval(simulateUpdate, 10000);
         });
     </script>
 </body>
-                          </html>
+</html>
