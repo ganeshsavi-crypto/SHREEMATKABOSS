@@ -1,1 +1,524 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binance P2P Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0e17 0%, #1a1f2e 100%);
+            color: #e4e6eb;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(30, 35, 48, 0.9);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2d3748;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0b90b;
+        }
+        
+        .logo {
+            color: #f0b90b;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        h1 {
+            color: #ffffff;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: #f0b90b;
+            margin: 25px 0 15px 0;
+            font-size: 1.5rem;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #3a4558;
+        }
+        
+        .balance-card {
+            background: linear-gradient(135deg, #1e2330 0%, #2d3748 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #3a4558;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .balance-amount {
+            font-size: 3rem;
+            color: #f0b90b;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            margin: 25px 0;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 200px;
+        }
+        
+        .btn-send {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+        
+        .btn-send:hover {
+            background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .btn-receive {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+        }
+        
+        .btn-receive:hover {
+            background: linear-gradient(135deg, #27ae60 0%, #219653 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(46, 204, 113, 0.3);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(40, 45, 60, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: #2d3748;
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #f0b90b;
+            border-bottom: 2px solid #3a4558;
+        }
+        
+        td {
+            padding: 16px 15px;
+            border-bottom: 1px solid #3a4558;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .type-sent {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        
+        .type-received {
+            color: #2ecc71;
+            font-weight: 600;
+        }
+        
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .card {
+            background: rgba(40, 45, 60, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #f0b90b;
+        }
+        
+        .card h3 {
+            color: #a0aec0;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .card .value {
+            font-size: 1.8rem;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        .card .sub-value {
+            font-size: 1.1rem;
+            color: #a0aec0;
+            margin-top: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #3a4558;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: #1e2330;
+            border-radius: 16px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid #3a4558;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: #a0aec0;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #a0aec0;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #3a4558;
+            background: #2d3748;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .balance-amount {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-coins"></i> BINANCE P2P
+            </div>
+            <h1>Transaction Dashboard</h1>
+            <p>Secure Peer-to-Peer Trading Platform</p>
+        </div>
+        
+        <!-- User Info Section -->
+        <h2><i class="fas fa-user-circle"></i> Account Information</h2>
+        <div class="balance-card">
+            <div style="text-align: center; margin-bottom: 10px;">
+                <span style="color: #a0aec0;">Account Holder:</span>
+                <span style="font-size: 1.3rem; font-weight: 600; color: white;">GANESH SIDDHARTH PATIL</span>
+            </div>
+            <div class="balance-amount">
+                $401.00 USD
+            </div>
+            <div style="text-align: center; color: #a0aec0; font-size: 0.9rem;">
+                Statement Date: 17 January 2026
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-send" onclick="openSendModal()">
+                <i class="fas fa-paper-plane"></i> Send Money
+            </button>
+            <button class="btn btn-receive" onclick="openReceiveModal()">
+                <i class="fas fa-download"></i> Receive Money
+            </button>
+        </div>
+        
+        <!-- Recent Transactions -->
+        <h2><i class="fas fa-exchange-alt"></i> Recent Transactions</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Counterparty</th>
+                    <th>Amount (USD)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>17/01/2026</td>
+                    <td class="type-sent"><i class="fas fa-arrow-up"></i> Sent</td>
+                    <td>RAJAK</td>
+                    <td>$100.00</td>
+                    <td><span style="color: #2ecc71; font-weight: 600;">Completed</span></td>
+                </tr>
+                <tr>
+                    <td>17/01/2026</td>
+                    <td class="type-received"><i class="fas fa-arrow-down"></i> Received</td>
+                    <td>SK</td>
+                    <td>$100.00</td>
+                    <td><span style="color: #2ecc71; font-weight: 600;">Completed</span></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- Monthly Summary -->
+        <h2><i class="fas fa-chart-line"></i> Monthly Performance</h2>
+        <div class="summary-cards">
+            <div class="card">
+                <h3>Total Volume</h3>
+                <div class="value">$2,236.00</div>
+                <div class="sub-value">₹199,004.00 INR</div>
+            </div>
+            <div class="card">
+                <h3>Commission Earned</h3>
+                <div class="value">₹7,960.36</div>
+                <div class="sub-value">This Month</div>
+            </div>
+            <div class="card">
+                <h3>Transactions</h3>
+                <div class="value">14</div>
+                <div class="sub-value">Avg: $159.71 each</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><i class="fas fa-shield-alt"></i> Secure & Encrypted Transaction System</p>
+            <p>This is an automated statement. For detailed records, please refer to your Binance P2P dashboard.</p>
+            <p>All amounts are approximate and subject to exchange rate fluctuations.</p>
+        </div>
+    </div>
+    
+    <!-- Send Money Modal -->
+    <div id="sendModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="color: #f0b90b;"><i class="fas fa-paper-plane"></i> Send Money</h2>
+                <button class="close-btn" onclick="closeSendModal()">&times;</button>
+            </div>
+            <form id="sendForm">
+                <div class="form-group">
+                    <label for="recipient">Recipient Name/ID</label>
+                    <input type="text" id="recipient" placeholder="Enter recipient name or ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="sendAmount">Amount (USD)</label>
+                    <input type="number" id="sendAmount" min="1" max="401" step="0.01" placeholder="0.00" required>
+                </div>
+                <div class="form-group">
+                    <label for="sendCurrency">Currency</label>
+                    <select id="sendCurrency">
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="INR">INR - Indian Rupee</option>
+                        <option value="EUR">EUR - Euro</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit btn-send">
+                    <i class="fas fa-paper-plane"></i> Send Now
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Receive Money Modal -->
+    <div id="receiveModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="color: #2ecc71;"><i class="fas fa-download"></i> Receive Money</h2>
+                <button class="close-btn" onclick="closeReceiveModal()">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Your Wallet Address</label>
+                <div style="background: #2d3748; padding: 15px; border-radius: 8px; margin-top: 10px; font-family: monospace; word-break: break-all;">
+                    0x7a9f...c4d2
+                </div>
+            </div>
+            <div class="form-group">
+                <label>QR Code</label>
+                <div style="background: white; padding: 20px; border-radius: 8px; display: inline-block; margin-top: 10px;">
+                    <!-- QR Code Placeholder -->
+                    <div style="width: 200px; height: 200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #333;">
+                        <i class="fas fa-qrcode" style="font-size: 3rem;"></i>
+                    </div>
+                </div>
+            </div>
+                        <div class="form-group">
+                <label>Share your payment link</label>
+                <div style="display: flex; margin-top: 10px;">
+                    <input type="text" value="https://p2p.binance.com/pay/ganeshpatil" readonly style="flex: 1; border-radius: 8px 0 0 8px;">
+                    <button style="background: #f0b90b; color: black; border: none; padding: 0 20px; border-radius: 0 8px 8px 0; cursor: pointer;">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="btn-submit btn-receive" onclick="closeReceiveModal()">
+                <i class="fas fa-check"></i> Done
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // Modal Functions
+        function openSendModal() {
+            document.getElementById('sendModal').style.display = 'flex';
+        }
+        
+        function closeSendModal() {
+            document.getElementById('sendModal').style.display = 'none';
+        }
+        
+        function openReceiveModal() {
+            document.getElementById('receiveModal').style.display = 'flex';
+        }
+        
+        function closeReceiveModal() {
+            document.getElementById('receiveModal').style.display = 'none';
+        }
+        
+        // Handle Send Form Submission
+        document.getElementById('sendForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const recipient = document.getElementById('recipient').value;
+            const amount = document.getElementById('sendAmount').value;
+            const currency = document.getElementById('sendCurrency').value;
+            
+            if (parseFloat(amount) > 401) {
+                alert('Error: Amount exceeds available balance!');
+                return;
+            }
+            
+            // In a real app, you would send this data to a server
+            alert(`Sending ${amount} ${currency} to ${recipient}...\n\nThis is a demo. In a real application, this would process the transaction.`);
+            
+            closeSendModal();
+            
+            // Reset form
+            document.getElementById('sendForm').reset();
+        });
+        
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const sendModal = document.getElementById('sendModal');
+            const receiveModal = document.getElementById('receiveModal');
+            
+            if (event.target === sendModal) {
+                closeSendModal();
+            }
+            if (event.target === receiveModal) {
+                closeReceiveModal();
+            }
+        }
+        
+        // Copy to clipboard functionality
+        document.querySelectorAll('.fas.fa-copy').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentElement.previousElementSibling;
+                input.select();
+                document.execCommand('copy');
+                
+                // Show copied message
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i>';
+                this.style.background = '#2ecc71';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalHTML;
+                    this.style.background = '#f0b90b';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
