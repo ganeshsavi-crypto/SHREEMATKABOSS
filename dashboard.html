@@ -166,8 +166,7 @@
             font-weight: 600;
             margin-bottom: 20px;
         }
-
-        /* Mobile Balance Card */
+                /* Mobile Balance Card */
         .balance-card-mobile {
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
             border-radius: 16px;
@@ -255,6 +254,222 @@
             padding: 6px 12px;
             border-radius: 10px;
         }
+
+        /* Transaction Cards */
+        .transaction-card {
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 12px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s ease;
+        }
+
+        .transaction-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .transaction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .transaction-date {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .transaction-type {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .type-sent {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .type-received {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .transaction-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .transaction-party h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .transaction-party p {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .transaction-amount {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .transaction-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #d1fae5;
+            color: #065f46;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+
+        /* Mobile Performance */
+        .mobile-performance {
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .performance-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .month-overview {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .stat-card-mobile {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .stat-content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .stat-subtitle {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* Mobile Footer */
+        .mobile-footer {
+            padding: 25px 20px;
+            background: #1e293b;
+            color: white;
+        }
+
+        .security-badge-mobile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .security-icon {
+            background: #f0b90b;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .security-text h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .security-text p {
+            font-size: 13px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .footer-links-mobile {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+        }
+
+        .footer-link {
+            color: #f0b90b;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .disclaimer {
+            font-size: 12px;
+            opacity: 0.8;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            body { padding: 30px; }
+            .container { max-width: 500px; }
+        }
     </style>
 </head>
 <body>
@@ -270,8 +485,7 @@
                 <div class="time-display" id="currentTime">12:00:00 PM</div>
             </div>
         </div>
-
-        <!-- Mobile Header -->
+                <!-- Mobile Header -->
         <div class="mobile-header">
             <div class="mobile-header-top">
                 <div class="logo">
@@ -313,7 +527,8 @@
                 </button>
             </div>
         </div>
-                <!-- Recent Transactions Mobile -->
+
+        <!-- Recent Transactions Mobile -->
         <div class="mobile-transactions">
             <div class="section-title-mobile">
                 <h2><i class="fas fa-history"></i> Recent</h2>
@@ -542,237 +757,3 @@
     </script>
 </body>
 </html>
-/* Transaction Cards (Mobile) */
-.transaction-card {
-    background: white;
-    border-radius: 16px;
-    padding: 18px;
-    margin-bottom: 12px;
-    border: 1px solid #e2e8f0;
-    transition: transform 0.2s ease;
-}
-
-.transaction-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.transaction-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.transaction-date {
-    font-size: 14px;
-    color: #64748b;
-    font-weight: 500;
-}
-
-.transaction-type {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 13px;
-}
-
-.type-sent {
-    background: #fee2e2;
-    color: #dc2626;
-}
-
-.type-received {
-    background: #d1fae5;
-    color: #059669;
-}
-
-.transaction-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.transaction-party h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 4px;
-}
-
-.transaction-party p {
-    font-size: 14px;
-    color: #64748b;
-}
-
-.transaction-amount {
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.transaction-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: #d1fae5;
-    color: #065f46;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 13px;
-    margin-top: 12px;
-}
-
-/* Mobile Performance */
-.mobile-performance {
-    padding: 20px;
-    background: #f8fafc;
-}
-
-.performance-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.month-overview {
-    font-size: 14px;
-    color: #64748b;
-    margin-bottom: 20px;
-}
-
-.stat-card-mobile {
-    background: white;
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 15px;
-    border: 1px solid #e2e8f0;
-}
-
-.stat-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 15px;
-}
-
-.stat-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    color: white;
-}
-
-.stat-content h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: #1e293b;
-}
-
-.stat-value {
-    font-size: 28px;
-    font-weight: 800;
-    color: #1e293b;
-    margin-bottom: 5px;
-}
-
-.stat-subtitle {
-    font-size: 14px;
-    color: #64748b;
-}
-
-/* Mobile Footer */
-.mobile-footer {
-    padding: 25px 20px;
-    background: #1e293b;
-    color: white;
-}
-
-.security-badge-mobile {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.security-icon {
-    background: #f0b90b;
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.security-text h3 {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 5px;
-}
-
-.security-text p {
-    font-size: 13px;
-    opacity: 0.9;
-    line-height: 1.5;
-}
-
-.footer-links-mobile {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #334155;
-}
-
-.footer-link {
-    color: #f0b90b;
-    text-decoration: none;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.disclaimer {
-    font-size: 12px;
-    opacity: 0.8;
-    line-height: 1.5;
-    margin-top: 15px;
-}
-
-/* Responsive Adjustments */
-@media (min-width: 768px) {
-    body {
-        padding: 30px;
-    }
-    
-    .container {
-        max-width: 500px;
-    }
-    
-    .transaction-card {
-        padding: 20px;
-    }
-    
-    .btn-mobile {
-        padding: 18px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .container {
-        max-width: 450px;
-    }
-}
