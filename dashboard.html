@@ -166,7 +166,8 @@
             font-weight: 600;
             margin-bottom: 20px;
         }
-                /* Mobile Balance Card */
+
+        /* Mobile Balance Card */
         .balance-card-mobile {
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
             border-radius: 16px;
@@ -225,8 +226,7 @@
             background: #10b981;
             color: white;
         }
-
-        /* Mobile Transactions */
+                /* Mobile Transactions */
         .mobile-transactions {
             padding: 20px;
             border-bottom: 1px solid #e2e8f0;
@@ -733,26 +733,8 @@
                 });
             });
             
-            // Add pull-to-refresh simulation
-            let startY;
-            const container = document.querySelector('.container');
-            
-            container.addEventListener('touchstart', e => {
-                startY = e.touches[0].clientY;
-            });
-            
-            container.addEventListener('touchend', e => {
-                const endY = e.changedTouches[0].clientY;
-                if (startY - endY > 100) {
-                    // Simulate refresh
-                    container.style.transform = 'translateY(50px)';
-                    setTimeout(() => {
-                        container.style.transform = '';
-                        alert('Refreshing data...');
-                        updateDateTime();
-                    }, 300);
-                }
-            });
+            // REMOVED: Auto-refresh alert
+            // Only manual pull-to-refresh remains
         });
     </script>
 </body>
