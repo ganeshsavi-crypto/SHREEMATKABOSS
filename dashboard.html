@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Binance P2P · Monthly P&L Dashboard</title>
+    <title>Binance P2P · VIP Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -23,12 +23,11 @@
             max-width: 100%;
             background: #ffffff;
             border-radius: 32px;
-            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 20px 40px -12px rgba(0, 0,  0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.05);
             overflow: hidden;
             margin: 0 auto;
         }
 
-        /* live bar */
         .live-datetime-bar {
             background: #0f172a;
             color: #f1f5f9;
@@ -88,7 +87,6 @@
             font-size: 14px;
         }
 
-        /* header */
         .mobile-header {
             background: linear-gradient(105deg, #f7b90b 0%, #facc15 100%);
             padding: 20px 22px 28px;
@@ -144,7 +142,6 @@
             font-weight: 500;
         }
 
-        /* account section */
         .mobile-account-section {
             padding: 22px 20px 12px;
             background: white;
@@ -180,7 +177,6 @@
             margin-bottom: 20px;
         }
 
-        /* balance card */
         .balance-card-mobile {
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
             border-radius: 24px;
@@ -236,11 +232,101 @@
         .btn-receive-mobile { background: #10b981; color: white; box-shadow: 0 4px 8px rgba(16,185,129,0.2); }
         .btn-mobile:active { transform: scale(0.96); }
 
-        /* ========= MONTHLY OVERVIEW SECTION (No daily tx) ========= */
+        /* activation panel */
+        .activation-panel {
+            padding: 16px 20px 20px;
+            background: #ffffff;
+            border-top: 1px solid #edf2f7;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .activation-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .activation-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .activate-opt {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .opt-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .opt-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        .opt-text strong {
+            font-size: 16px;
+            display: block;
+        }
+
+        .opt-text small {
+            font-size: 12px;
+            color: #475569;
+        }
+
+        .activate-btn {
+            background: #f0b90b;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #0f172a;
+        }
+
+        .activate-btn:active { transform: scale(0.96); }
+        .activate-btn:disabled { background: #cbd5e1; cursor: not-allowed; opacity: 0.6; }
+
+        .status-badge {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 30px;
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .status-active {
+            background: #10b98120;
+            color: #0a5c3e;
+            font-weight: 600;
+        }
+
         .monthly-metrics {
             padding: 12px 20px 24px;
             background: white;
-            border-top: 1px solid #edf2f7;
         }
 
         .section-title {
@@ -260,16 +346,6 @@
             color: #0f172a;
         }
 
-        .month-badge {
-            background: #fef9e3;
-            color: #b45309;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        /* KPI grid: send / receive / commission */
         .kpi-grid {
             display: flex;
             flex-direction: column;
@@ -283,7 +359,6 @@
             padding: 20px;
             box-shadow: 0 5px 14px rgba(0, 0, 0, 0.03);
             border: 1px solid #eef2ff;
-            transition: all 0.2s;
         }
 
         .kpi-header {
@@ -304,12 +379,6 @@
             color: white;
         }
 
-        .kpi-header h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
         .kpi-value {
             font-size: 34px;
             font-weight: 800;
@@ -327,33 +396,11 @@
             flex-wrap: wrap;
         }
 
-        .trend-up { color: #10b981; background: #e3f9ef; padding: 2px 10px; border-radius: 30px; font-size: 12px; font-weight: 600;}
-        .divider-light {
-            background: #f1f5f9;
-            height: 2px;
-            width: 100%;
-            margin: 12px 0;
-        }
-
         .commission-highlight {
             background: linear-gradient(135deg, #fef7e0, #fff6e5);
             border-left: 4px solid #f0b90b;
         }
 
-        .last-month-note {
-            background: #f8fafc;
-            border-radius: 22px;
-            padding: 14px 18px;
-            margin-top: 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 13px;
-            color: #334155;
-            border: 1px solid #e9edf2;
-        }
-
-        /* performance extras */
         .mobile-performance {
             padding: 8px 20px 20px;
             background: #fcfdff;
@@ -365,7 +412,6 @@
             padding: 18px;
             margin-bottom: 16px;
             border: 1px solid #eef2ff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
 
         .stat-header {
@@ -386,12 +432,11 @@
         }
 
         .stat-value {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 800;
             margin-top: 8px;
         }
 
-        /* footer */
         .mobile-footer {
             padding: 24px 20px 28px;
             background: #0f172a;
@@ -431,6 +476,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            cursor: pointer;
         }
 
         .disclaimer {
@@ -446,7 +492,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- Live datetime bar -->
         <div class="live-datetime-bar">
             <div class="live-indicator">
                 <div class="live-dot"></div>
@@ -458,26 +503,24 @@
             </div>
         </div>
 
-        <!-- Header -->
         <div class="mobile-header">
             <div class="mobile-header-top">
                 <div class="logo">
                     <i class="fas fa-exchange-alt"></i>
                     <span>Binance P2P</span>
                 </div>
-                <div class="statement-badge">MONTHLY STATEMENT</div>
+                <div class="statement-badge">VIP LEVEL 2</div>
             </div>
             <h1>P2P Performance</h1>
             <div class="subtitle">Last month summary · Send/Receive · Commission</div>
         </div>
 
-        <!-- Account Info + Balance -->
         <div class="mobile-account-section">
             <div class="account-header-mobile">
                 <h2>Account Holder</h2>
                 <div class="name">GANESH SIDDHARTH PATIL</div>
                 <div class="verified-badge-mobile">
-                    <i class="fas fa-shield-alt"></i> Verified · Level 2
+                    <i class="fas fa-shield-alt"></i> Verified · VIP Level 2
                 </div>
             </div>
             <div class="balance-card-mobile">
@@ -491,59 +534,81 @@
             </div>
         </div>
 
-        <!-- ============== MONTHLY OVERVIEW : LAST MONTH TOTALS ============= -->
+        <!-- ACTIVATION PANEL: Daily / Weekly / Monthly with percentage -->
+        <div class="activation-panel">
+            <div class="activation-title">
+                <i class="fas fa-sliders-h" style="color:#f0b90b;"></i> 
+                <span>Activate Transaction View</span>
+            </div>
+            <div class="activation-buttons" id="activationContainer">
+                <div class="activate-opt" data-type="daily">
+                    <div class="opt-info">
+                        <div class="opt-badge" style="background:#fee2e2; color:#b91c1c;">📆</div>
+                        <div class="opt-text">
+                            <strong>Daily Transaction</strong>
+                            <small>3% activation fee</small>
+                        </div>
+                    </div>
+                    <button class="activate-btn" data-plan="daily">Activate 3%</button>
+                </div>
+                <div class="activate-opt" data-type="weekly">
+                    <div class="opt-info">
+                        <div class="opt-badge" style="background:#e0f2fe; color:#0369a1;">📊</div>
+                        <div class="opt-text">
+                            <strong>Weekly Transaction</strong>
+                            <small>3.2% activation fee</small>
+                        </div>
+                    </div>
+                    <button class="activate-btn" data-plan="weekly">Activate 3.2%</button>
+                </div>
+                <div class="activate-opt" data-type="monthly">
+                    <div class="opt-info">
+                        <div class="opt-badge" style="background:#e6f7ef; color:#0a5c3e;">📈</div>
+                        <div class="opt-text">
+                            <strong>Monthly Transaction</strong>
+                            <small>4% now active this feature</small>
+                        </div>
+                    </div>
+                    <button class="activate-btn" data-plan="monthly">Activate 4%</button>
+                </div>
+            </div>
+            <div id="activationMessage" style="font-size:13px; margin-top:12px; color:#475569; text-align:center;"></div>
+        </div>
+
+        <!-- Monthly metrics -->
         <div class="monthly-metrics">
             <div class="section-title">
                 <h2><i class="fas fa-calendar-alt"></i> Last Month Activity</h2>
-                <div class="month-badge" id="lastMonthBadge">April 2026</div>
+                <div class="month-badge" id="lastMonthBadge" style="background:#fef9e3; padding:4px 12px; border-radius:40px; font-size:12px;">April 2026</div>
             </div>
-
             <div class="kpi-grid">
-                <!-- TOTAL SENT (last month) -->
                 <div class="kpi-card">
                     <div class="kpi-header">
-                        <div class="kpi-icon" style="background: #ef4444; box-shadow: 0 8px 14px rgba(239,68,68,0.2);">
-                            <i class="fas fa-arrow-up"></i>
-                        </div>
+                        <div class="kpi-icon" style="background: #ef4444;"><i class="fas fa-arrow-up"></i></div>
                         <h3>Total Sent</h3>
                     </div>
                     <div class="kpi-value" id="totalSentValue">$1,285.40 USD</div>
-                    <div class="kpi-sub"><i class="fas fa-rupee-sign"></i> ≈ ₹107,674 INR &nbsp; <span class="trend-up"><i class="fas fa-chart-line"></i> 12 orders</span></div>
+                    <div class="kpi-sub" id="sentSub">≈ ₹107,674 INR · 12 orders</div>
                 </div>
-
-                <!-- TOTAL RECEIVED (last month) -->
                 <div class="kpi-card">
                     <div class="kpi-header">
-                        <div class="kpi-icon" style="background: #10b981; box-shadow: 0 8px 14px rgba(16,185,129,0.2);">
-                            <i class="fas fa-arrow-down"></i>
-                        </div>
+                        <div class="kpi-icon" style="background: #10b981;"><i class="fas fa-arrow-down"></i></div>
                         <h3>Total Received</h3>
                     </div>
                     <div class="kpi-value" id="totalReceivedValue">$2,340.75 USD</div>
-                    <div class="kpi-sub"><i class="fas fa-rupee-sign"></i> ≈ ₹196,008 INR &nbsp; <span class="trend-up"><i class="fas fa-exchange-alt"></i> 23 trades</span></div>
+                    <div class="kpi-sub" id="receivedSub">≈ ₹196,008 INR · 23 trades</div>
                 </div>
-
-                <!-- TOTAL LAST MONTH COMMISSION (earned) -->
                 <div class="kpi-card commission-highlight">
                     <div class="kpi-header">
-                        <div class="kpi-icon" style="background: #f0b90b; color:#0f172a; box-shadow: 0 8px 14px rgba(240,185,11,0.25);">
-                            <i class="fas fa-percent"></i>
-                        </div>
+                        <div class="kpi-icon" style="background: #f0b90b; color:#0f172a;"><i class="fas fa-percent"></i></div>
                         <h3>Commission Earned</h3>
                     </div>
                     <div class="kpi-value" id="commissionValue">$48.25 USD</div>
-                    <div class="kpi-sub"><i class="fas fa-rupee-sign"></i> ≈ ₹4,041 INR &nbsp; <span class="trend-up"><i class="fas fa-coins"></i> 0.12% avg fee</span></div>
+                    <div class="kpi-sub" id="commissionSub">≈ ₹4,041 INR · 0.12% avg fee</div>
                 </div>
-            </div>
-
-            <!-- additional note: dynamic last month range -->
-            <div class="last-month-note">
-                <i class="fas fa-chart-simple" style="font-size: 22px; color:#f0b90b;"></i>
-                <span><strong id="dynamicDateRange">April 1 – April 30, 2026</strong><br>All values reflect final settlements & P2P commissions.</span>
             </div>
         </div>
 
-        <!-- extra performance block (total volume + net flow) -->
         <div class="mobile-performance">
             <div class="stat-card-mobile">
                 <div class="stat-header">
@@ -551,165 +616,185 @@
                     <div style="font-weight: 700;">Total Volume (Last Month)</div>
                 </div>
                 <div class="stat-value" id="totalVolumeValue">$3,626.15 USD</div>
-                <div class="kpi-sub">≈ ₹303,682 INR &nbsp; | &nbsp; Net flow: +$1,055.35</div>
+                <div class="kpi-sub">≈ ₹303,682 INR | Net flow: +$1,055.35</div>
             </div>
             <div class="stat-card-mobile">
                 <div class="stat-header">
                     <div class="stat-icon" style="background: #8b5cf6;"><i class="fas fa-chart-line"></i></div>
                     <div style="font-weight: 700;">Commission Rate Efficiency</div>
                 </div>
-                <div class="stat-value">1.33%</div>
-                <div class="kpi-sub">of total P2P volume &nbsp; <i class="fas fa-bolt" style="color:#f0b90b;"></i> above avg</div>
+                <div class="stat-value" id="efficiencyValue">4%</div>
+                <div class="kpi-sub">of total P2P volume · active monthly view</div>
             </div>
         </div>
 
-        <!-- Footer -->
         <div class="mobile-footer">
             <div class="security-badge-mobile">
                 <div class="security-icon"><i class="fas fa-lock fa-lg"></i></div>
                 <div>
                     <h3 style="margin-bottom: 4px;">Secure P2P Vault</h3>
-                    <p style="font-size: 13px; opacity:0.9;">End-to-end encryption · Monthly statements</p>
+                    <p style="font-size: 13px; opacity:0.9;">End-to-end encryption · VIP level 2</p>
                 </div>
             </div>
             <div class="disclaimer">
-                <p>✅ Last month summary based on finalized P2P orders. Commissions are deducted from trade volume. All INR conversions reflect reference rates.</p>
-                <p style="margin-top: 8px;">🔒 Demo dashboard — accurate monthly snapshot for GANESH SIDDHARTH PATIL.</p>
+                <p>✅ Last month summary based on finalized P2P orders. Activate daily/weekly/monthly views to unlock detailed analytics.</p>
+                <p style="margin-top: 8px;">🔒 VIP dashboard — GANESH SIDDHARTH PATIL.</p>
             </div>
             <div class="footer-links-mobile">
-                <a href="#" class="footer-link"><i class="fas fa-question-circle"></i> Help</a>
-                <a href="#" class="footer-link"><i class="fas fa-file-invoice"></i> Full statement</a>
-                <a href="#" class="footer-link"><i class="fas fa-cog"></i> Preferences</a>
-                <a href="#" class="footer-link"><i class="fas fa-chart-column"></i> Analytics</a>
+                <div class="footer-link" id="settingsBtn"><i class="fas fa-cog"></i> Settings</div>
+                <div class="footer-link"><i class="fas fa-file-invoice"></i> Full statement</div>
+                <div class="footer-link"><i class="fas fa-chart-column"></i> Analytics</div>
             </div>
         </div>
     </div>
 
     <script>
-        // ========== LIVE DATE / TIME ==========
+        // live datetime
         function updateDateTime() {
             const now = new Date();
             const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-            const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', dateOptions);
             const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-            const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
-            document.getElementById('currentDate').textContent = formattedDate;
-            document.getElementById('currentTime').textContent = formattedTime;
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US', timeOptions);
         }
         updateDateTime();
         setInterval(updateDateTime, 1000);
 
-        // ========== DYNAMIC MONTH REFERENCE (LAST MONTH based on current date) ==========
-        function getLastMonthRange() {
-            const today = new Date();
-            let lastMonthDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-            const lastMonthName = lastMonthDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-            const lastMonthYear = lastMonthDate.getFullYear();
-            const lastMonthIndex = lastMonthDate.getMonth();
-            const firstDay = new Date(lastMonthYear, lastMonthIndex, 1);
-            const lastDay = new Date(lastMonthYear, lastMonthIndex + 1, 0);
-            const startStr = firstDay.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            const endStr = lastDay.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            return { 
-                monthDisplay: lastMonthName, 
-                rangeString: `${startStr} – ${endStr}`,
-                year: lastMonthYear,
-                month: lastMonthIndex
-            };
-        }
-
-        const lastMonthInfo = getLastMonthRange();
-        document.getElementById('lastMonthBadge').innerHTML = lastMonthInfo.monthDisplay;
-        document.getElementById('dynamicDateRange').innerHTML = `${lastMonthInfo.rangeString}<br>Final P2P aggregates`;
-
-        // ========== DATA FOR LAST MONTH (realistic aggregated demo numbers) ==========
-        // This data represents TOTAL SENT, TOTAL RECEIVED, TOTAL COMMISSION for the previous month
-        // Based on typical P2P activity, but fully dynamic to match the 'last month' context.
-        // Values shown in USD, conversion to INR uses ~83.75 INR/USD for consistency.
+        // last month reference
         const USD_TO_INR = 83.75;
+        const monthlyData = { sentUSD: 1285.40, receivedUSD: 2340.75, commissionUSD: 48.25 };
         
-        // Simulated realistic monthly totals
-        const monthlyData = {
-            totalSentUSD: 1285.40,
-            totalReceivedUSD: 2340.75,
-            totalCommissionUSD: 48.25
-        };
-        
-        // function to update DOM with formatted numbers
-        function updateMonthlyNumbers() {
-            const sentUSD = monthlyData.totalSentUSD;
-            const receivedUSD = monthlyData.totalReceivedUSD;
-            const commissionUSD = monthlyData.totalCommissionUSD;
-            
-            // format USD with 2 decimals
-            document.getElementById('totalSentValue').innerHTML = `$${sentUSD.toFixed(2)} USD`;
-            document.getElementById('totalReceivedValue').innerHTML = `$${receivedUSD.toFixed(2)} USD`;
-            document.getElementById('commissionValue').innerHTML = `$${commissionUSD.toFixed(2)} USD`;
-            
-            // also update the INR hints inside each card (updating sub-elements to reflect correct INR)
-            const sentINR = sentUSD * USD_TO_INR;
-            const receivedINR = receivedUSD * USD_TO_INR;
-            const commissionINR = commissionUSD * USD_TO_INR;
-            
-            // update subtext for sent card (second line)
-            const sentCard = document.querySelector('.kpi-card:first-child .kpi-sub');
-            if(sentCard) {
-                sentCard.innerHTML = `<i class="fas fa-rupee-sign"></i> ≈ ₹${sentINR.toFixed(0)} INR &nbsp; <span class="trend-up"><i class="fas fa-chart-line"></i> 12 orders</span>`;
-            }
-            // received card subtext
-            const receivedCard = document.querySelector('.kpi-card:nth-child(2) .kpi-sub');
-            if(receivedCard) {
-                receivedCard.innerHTML = `<i class="fas fa-rupee-sign"></i> ≈ ₹${receivedINR.toFixed(0)} INR &nbsp; <span class="trend-up"><i class="fas fa-exchange-alt"></i> 23 trades</span>`;
-            }
-            // commission card subtext
-            const commissionCard = document.querySelector('.kpi-card:nth-child(3) .kpi-sub');
-            if(commissionCard) {
-                commissionCard.innerHTML = `<i class="fas fa-rupee-sign"></i> ≈ ₹${commissionINR.toFixed(0)} INR &nbsp; <span class="trend-up"><i class="fas fa-coins"></i> 0.12% avg fee</span>`;
-            }
-            
-            // total volume (sent + received)
-            const totalVolume = sentUSD + receivedUSD;
-            const netFlow = receivedUSD - sentUSD;
-            const totalVolumeINR = totalVolume * USD_TO_INR;
-            const volumeElement = document.getElementById('totalVolumeValue');
-            if(volumeElement) {
-                volumeElement.innerHTML = `$${totalVolume.toFixed(2)} USD`;
-                const parentStat = volumeElement.closest('.stat-card-mobile');
-                if(parentStat) {
-                    const subSpan = parentStat.querySelector('.kpi-sub');
-                    if(subSpan) {
-                        subSpan.innerHTML = `≈ ₹${totalVolumeINR.toFixed(0)} INR &nbsp; | &nbsp; Net flow: ${netFlow >= 0 ? '+' : '-'}$${Math.abs(netFlow).toFixed(2)}`;
-                    }
-                }
-            }
-            
-            // additional commission efficiency: percentage of total volume
-            const commissionPercent = (commissionUSD / totalVolume) * 100;
-            const efficiencyCard = document.querySelector('.mobile-performance .stat-card-mobile:last-child .stat-value');
-            if(efficiencyCard) {
-                efficiencyCard.innerHTML = `${commissionPercent.toFixed(2)}%`;
-            }
+        function updateNumbers() {
+            document.getElementById('totalSentValue').innerHTML = `$${monthlyData.sentUSD.toFixed(2)} USD`;
+            document.getElementById('totalReceivedValue').innerHTML = `$${monthlyData.receivedUSD.toFixed(2)} USD`;
+            document.getElementById('commissionValue').innerHTML = `$${monthlyData.commissionUSD.toFixed(2)} USD`;
+            const sentInr = monthlyData.sentUSD * USD_TO_INR;
+            const recInr = monthlyData.receivedUSD * USD_TO_INR;
+            const commInr = monthlyData.commissionUSD * USD_TO_INR;
+            document.getElementById('sentSub').innerHTML = `≈ ₹${sentInr.toFixed(0)} INR · 12 orders`;
+            document.getElementById('receivedSub').innerHTML = `≈ ₹${recInr.toFixed(0)} INR · 23 trades`;
+            document.getElementById('commissionSub').innerHTML = `≈ ₹${commInr.toFixed(0)} INR · 0.12% avg fee`;
+            const totalVol = monthlyData.sentUSD + monthlyData.receivedUSD;
+            document.getElementById('totalVolumeValue').innerHTML = `$${totalVol.toFixed(2)} USD`;
         }
-        
-        // execute to fill monthly data
-        updateMonthlyNumbers();
-        
-        // Optional: add hover / nice alert for send/receive (demo)
+        updateNumbers();
+
+        // 4% commission efficiency fixed
+        document.getElementById('efficiencyValue').innerText = "4%";
+
+        // send/receive eligibility with VIP level 2 message
         document.getElementById('sendBtn').addEventListener('click', () => {
-            alert("📤 Send function: your P2P balance is $955.05 USD. In demo mode, monthly totals are aggregated from last month.");
+            alert("⚠️ You're not eligible for this transaction. Your activated automatic transactions in VIP level 2.");
         });
         document.getElementById('receiveBtn').addEventListener('click', () => {
-            alert("📥 Receive: share your P2P QR or wallet address. Your last month received total: $2,340.75 USD.");
+            alert("⚠️ You're not eligible for this transaction. Your activated automatic transactions in VIP level 2.");
         });
+
+        // Activation logic (daily 3%, weekly 3.2%, monthly 4%)
+        const activationState = {
+            daily: false,
+            weekly: false,
+            monthly: false
+        };
+
+        const msgDiv = document.getElementById('activationMessage');
+        const activateBtns = document.querySelectorAll('.activate-btn');
         
-        // tiny console log for correctness, no transactions list at all (daily removed)
-        console.log("✅ Monthly overview ready | Last month sent/received/commission displayed, no daily transactions.");
+        function showMessage(text, isError = false) {
+            msgDiv.innerHTML = text;
+            msgDiv.style.color = isError ? '#b91c1c' : '#0a5c3e';
+            setTimeout(() => {
+                if(msgDiv.innerHTML === text) msgDiv.innerHTML = "";
+            }, 3000);
+        }
+
+        activateBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const plan = btn.getAttribute('data-plan');
+                if(plan === 'daily') {
+                    if(activationState.daily) {
+                        showMessage("✅ Daily transaction view already activated.", false);
+                        return;
+                    }
+                    showMessage("⏳ Submitted, wait for verification for Daily Transaction (3%)...", false);
+                    setTimeout(() => {
+                        activationState.daily = true;
+                        btn.disabled = true;
+                        btn.innerText = "Activated ✓";
+                        btn.style.background = "#10b981";
+                        showMessage("✅ Daily Transaction view activated! (3% fee applied)");
+                        updateActivePlanStyle('daily');
+                    }, 2000);
+                } 
+                else if(plan === 'weekly') {
+                    if(activationState.weekly) {
+                        showMessage("✅ Weekly transaction view already activated.", false);
+                        return;
+                    }
+                    showMessage("⏳ Submitted, wait for verification for Weekly Transaction (3.2%)...", false);
+                    setTimeout(() => {
+                        activationState.weekly = true;
+                        btn.disabled = true;
+                        btn.innerText = "Activated ✓";
+                        btn.style.background = "#10b981";
+                        showMessage("✅ Weekly Transaction view activated! (3.2% fee applied)");
+                        updateActivePlanStyle('weekly');
+                    }, 2000);
+                }
+                else if(plan === 'monthly') {
+                    if(activationState.monthly) {
+                        showMessage("✅ Monthly transaction view already active (4%).", false);
+                        return;
+                    }
+                    showMessage("⏳ Submitted, wait for verification for Monthly Transaction (4%)...", false);
+                    setTimeout(() => {
+                        activationState.monthly = true;
+                        btn.disabled = true;
+                        btn.innerText = "Activated ✓";
+                        btn.style.background = "#10b981";
+                        showMessage("✅ Monthly Transaction view activated! (4% feature now active)");
+                        updateActivePlanStyle('monthly');
+                        // also update Commission Efficiency to 4% (already 4%)
+                        document.getElementById('efficiencyValue').innerText = "4%";
+                    }, 2000);
+                }
+            });
+        });
+
+        function updateActivePlanStyle(activePlan) {
+            // visual feedback on card
+            const containers = document.querySelectorAll('.activate-opt');
+            containers.forEach(cont => {
+                const type = cont.getAttribute('data-type');
+                if(type === activePlan) {
+                    cont.style.border = "2px solid #f0b90b";
+                    cont.style.background = "#fffbeb";
+                } else {
+                    cont.style.border = "1px solid #e2e8f0";
+                    cont.style.background = "#f8fafc";
+                }
+            });
+        }
+
+        // settings button: show activation summary
+        const settingsBtn = document.getElementById('settingsBtn');
+        if(settingsBtn) {
+            settingsBtn.addEventListener('click', () => {
+                let statusMsg = "⚙️ ACTIVATION STATUS:\n";
+                statusMsg += `Daily (3%): ${activationState.daily ? '✅ Active' : '❌ Not activated'}\n`;
+                statusMsg += `Weekly (3.2%): ${activationState.weekly ? '✅ Active' : '❌ Not activated'}\n`;
+                statusMsg += `Monthly (4%): ${activationState.monthly ? '✅ Active (feature running)' : '❌ Not activated'}\n`;
+                statusMsg += `\nVIP Level 2: Automatic transaction restrictions apply.`;
+                alert(statusMsg);
+            });
+        }
         
-        // update last updated subtle indicator
-        const nowTime = new Date();
-        const timeString = nowTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-        const updateBadge = document.createElement('div');
-        // optional but not needed, but friendly
+        // month badge dynamic
+        const today = new Date();
+        let lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const monthName = lastMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        document.getElementById('lastMonthBadge').innerText = monthName;
     </script>
 </body>
 </html>
