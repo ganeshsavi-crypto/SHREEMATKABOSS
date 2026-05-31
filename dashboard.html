@@ -23,7 +23,7 @@
             max-width: 100%;
             background: #ffffff;
             border-radius: 32px;
-            box-shadow: 0 20px 40px -12px rgba(0, 0,  0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.05);
             overflow: hidden;
             margin: 0 auto;
         }
@@ -232,7 +232,6 @@
         .btn-receive-mobile { background: #10b981; color: white; box-shadow: 0 4px 8px rgba(16,185,129,0.2); }
         .btn-mobile:active { transform: scale(0.96); }
 
-        /* activation panel */
         .activation-panel {
             padding: 16px 20px 20px;
             background: #ffffff;
@@ -266,6 +265,7 @@
             flex-wrap: wrap;
             gap: 12px;
             border: 1px solid #e2e8f0;
+            transition: all 0.2s;
         }
 
         .opt-info {
@@ -316,12 +316,6 @@
             border-radius: 30px;
             background: #e2e8f0;
             color: #334155;
-        }
-
-        .status-active {
-            background: #10b98120;
-            color: #0a5c3e;
-            font-weight: 600;
         }
 
         .monthly-metrics {
@@ -485,6 +479,77 @@
             margin-top: 18px;
         }
 
+        /* Custom confirmation modal */
+        .confirm-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+        .confirm-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-card {
+            background: white;
+            width: 320px;
+            border-radius: 32px;
+            padding: 24px 20px 20px;
+            text-align: center;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.3);
+            transform: scale(0.95);
+            transition: transform 0.2s;
+        }
+        .confirm-modal.active .modal-card {
+            transform: scale(1);
+        }
+        .modal-icon {
+            font-size: 48px;
+            color: #f0b90b;
+            margin-bottom: 12px;
+        }
+        .modal-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .modal-desc {
+            font-size: 14px;
+            color: #475569;
+            margin-bottom: 20px;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .modal-btn {
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .modal-confirm {
+            background: #f0b90b;
+            color: #0f172a;
+        }
+        .modal-cancel {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
         @media (min-width: 480px) {
             .container { max-width: 500px; margin: 0 auto; }
         }
@@ -493,22 +558,13 @@
 <body>
     <div class="container">
         <div class="live-datetime-bar">
-            <div class="live-indicator">
-                <div class="live-dot"></div>
-                <span>LIVE</span>
-            </div>
-            <div class="datetime-display">
-                <div class="date-display" id="currentDate"></div>
-                <div class="time-display" id="currentTime"></div>
-            </div>
+            <div class="live-indicator"><div class="live-dot"></div><span>LIVE</span></div>
+            <div class="datetime-display"><div class="date-display" id="currentDate"></div><div class="time-display" id="currentTime"></div></div>
         </div>
 
         <div class="mobile-header">
             <div class="mobile-header-top">
-                <div class="logo">
-                    <i class="fas fa-exchange-alt"></i>
-                    <span>Binance P2P</span>
-                </div>
+                <div class="logo"><i class="fas fa-exchange-alt"></i><span>Binance P2P</span></div>
                 <div class="statement-badge">VIP LEVEL 2</div>
             </div>
             <h1>P2P Performance</h1>
@@ -519,9 +575,7 @@
             <div class="account-header-mobile">
                 <h2>Account Holder</h2>
                 <div class="name">GANESH SIDDHARTH PATIL</div>
-                <div class="verified-badge-mobile">
-                    <i class="fas fa-shield-alt"></i> Verified · VIP Level 2
-                </div>
+                <div class="verified-badge-mobile"><i class="fas fa-shield-alt"></i> Verified · VIP Level 2</div>
             </div>
             <div class="balance-card-mobile">
                 <div class="label">Current Wallet Balance</div>
@@ -534,267 +588,167 @@
             </div>
         </div>
 
-        <!-- ACTIVATION PANEL: Daily / Weekly / Monthly with percentage -->
+        <!-- Activation Panel -->
         <div class="activation-panel">
-            <div class="activation-title">
-                <i class="fas fa-sliders-h" style="color:#f0b90b;"></i> 
-                <span>Activate Transaction View</span>
-            </div>
+            <div class="activation-title"><i class="fas fa-sliders-h" style="color:#f0b90b;"></i> <span>Activate Transaction View</span></div>
             <div class="activation-buttons" id="activationContainer">
                 <div class="activate-opt" data-type="daily">
-                    <div class="opt-info">
-                        <div class="opt-badge" style="background:#fee2e2; color:#b91c1c;">📆</div>
-                        <div class="opt-text">
-                            <strong>Daily Transaction</strong>
-                            <small>3% activation fee</small>
-                        </div>
-                    </div>
+                    <div class="opt-info"><div class="opt-badge" style="background:#fee2e2; color:#b91c1c;">📆</div><div class="opt-text"><strong>Daily Transaction</strong><small>3% activation fee</small></div></div>
                     <button class="activate-btn" data-plan="daily">Activate 3%</button>
                 </div>
                 <div class="activate-opt" data-type="weekly">
-                    <div class="opt-info">
-                        <div class="opt-badge" style="background:#e0f2fe; color:#0369a1;">📊</div>
-                        <div class="opt-text">
-                            <strong>Weekly Transaction</strong>
-                            <small>3.2% activation fee</small>
-                        </div>
-                    </div>
+                    <div class="opt-info"><div class="opt-badge" style="background:#e0f2fe; color:#0369a1;">📊</div><div class="opt-text"><strong>Weekly Transaction</strong><small>3.2% activation fee</small></div></div>
                     <button class="activate-btn" data-plan="weekly">Activate 3.2%</button>
                 </div>
                 <div class="activate-opt" data-type="monthly">
-                    <div class="opt-info">
-                        <div class="opt-badge" style="background:#e6f7ef; color:#0a5c3e;">📈</div>
-                        <div class="opt-text">
-                            <strong>Monthly Transaction</strong>
-                            <small>4% now active this feature</small>
-                        </div>
-                    </div>
+                    <div class="opt-info"><div class="opt-badge" style="background:#e6f7ef; color:#0a5c3e;">📈</div><div class="opt-text"><strong>Monthly Transaction</strong><small>4% now active this feature</small></div></div>
                     <button class="activate-btn" data-plan="monthly">Activate 4%</button>
                 </div>
             </div>
             <div id="activationMessage" style="font-size:13px; margin-top:12px; color:#475569; text-align:center;"></div>
         </div>
 
-        <!-- Monthly metrics -->
+        <!-- Monthly Metrics -->
         <div class="monthly-metrics">
-            <div class="section-title">
-                <h2><i class="fas fa-calendar-alt"></i> Last Month Activity</h2>
-                <div class="month-badge" id="lastMonthBadge" style="background:#fef9e3; padding:4px 12px; border-radius:40px; font-size:12px;">April 2026</div>
-            </div>
+            <div class="section-title"><h2><i class="fas fa-calendar-alt"></i> Last Month Activity</h2><div class="month-badge" id="lastMonthBadge" style="background:#fef9e3; padding:4px 12px; border-radius:40px; font-size:12px;"></div></div>
             <div class="kpi-grid">
-                <div class="kpi-card">
-                    <div class="kpi-header">
-                        <div class="kpi-icon" style="background: #ef4444;"><i class="fas fa-arrow-up"></i></div>
-                        <h3>Total Sent</h3>
-                    </div>
-                    <div class="kpi-value" id="totalSentValue">$1,285.40 USD</div>
-                    <div class="kpi-sub" id="sentSub">≈ ₹107,674 INR · 12 orders</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-header">
-                        <div class="kpi-icon" style="background: #10b981;"><i class="fas fa-arrow-down"></i></div>
-                        <h3>Total Received</h3>
-                    </div>
-                    <div class="kpi-value" id="totalReceivedValue">$2,340.75 USD</div>
-                    <div class="kpi-sub" id="receivedSub">≈ ₹196,008 INR · 23 trades</div>
-                </div>
-                <div class="kpi-card commission-highlight">
-                    <div class="kpi-header">
-                        <div class="kpi-icon" style="background: #f0b90b; color:#0f172a;"><i class="fas fa-percent"></i></div>
-                        <h3>Commission Earned</h3>
-                    </div>
-                    <div class="kpi-value" id="commissionValue">$48.25 USD</div>
-                    <div class="kpi-sub" id="commissionSub">≈ ₹4,041 INR · 0.12% avg fee</div>
-                </div>
+                <div class="kpi-card"><div class="kpi-header"><div class="kpi-icon" style="background:#ef4444;"><i class="fas fa-arrow-up"></i></div><h3>Total Sent</h3></div><div class="kpi-value" id="totalSentValue">$1,285.40 USD</div><div class="kpi-sub" id="sentSub">≈ ₹107,674 INR · 12 orders</div></div>
+                <div class="kpi-card"><div class="kpi-header"><div class="kpi-icon" style="background:#10b981;"><i class="fas fa-arrow-down"></i></div><h3>Total Received</h3></div><div class="kpi-value" id="totalReceivedValue">$2,340.75 USD</div><div class="kpi-sub" id="receivedSub">≈ ₹196,008 INR · 23 trades</div></div>
+                <div class="kpi-card commission-highlight"><div class="kpi-header"><div class="kpi-icon" style="background:#f0b90b; color:#0f172a;"><i class="fas fa-percent"></i></div><h3>Commission Earned</h3></div><div class="kpi-value" id="commissionValue">$48.25 USD</div><div class="kpi-sub" id="commissionSub">≈ ₹4,041 INR · 0.12% avg fee</div></div>
             </div>
         </div>
 
         <div class="mobile-performance">
-            <div class="stat-card-mobile">
-                <div class="stat-header">
-                    <div class="stat-icon" style="background: #3b82f6;"><i class="fas fa-chart-pie"></i></div>
-                    <div style="font-weight: 700;">Total Volume (Last Month)</div>
-                </div>
-                <div class="stat-value" id="totalVolumeValue">$3,626.15 USD</div>
-                <div class="kpi-sub">≈ ₹303,682 INR | Net flow: +$1,055.35</div>
-            </div>
-            <div class="stat-card-mobile">
-                <div class="stat-header">
-                    <div class="stat-icon" style="background: #8b5cf6;"><i class="fas fa-chart-line"></i></div>
-                    <div style="font-weight: 700;">Commission Rate Efficiency</div>
-                </div>
-                <div class="stat-value" id="efficiencyValue">4%</div>
-                <div class="kpi-sub">of total P2P volume · active monthly view</div>
-            </div>
+            <div class="stat-card-mobile"><div class="stat-header"><div class="stat-icon" style="background:#3b82f6;"><i class="fas fa-chart-pie"></i></div><div style="font-weight:700;">Total Volume (Last Month)</div></div><div class="stat-value" id="totalVolumeValue">$3,626.15 USD</div><div class="kpi-sub">≈ ₹303,682 INR | Net flow: +$1,055.35</div></div>
+            <div class="stat-card-mobile"><div class="stat-header"><div class="stat-icon" style="background:#8b5cf6;"><i class="fas fa-chart-line"></i></div><div style="font-weight:700;">Commission Rate Efficiency</div></div><div class="stat-value" id="efficiencyValue">4%</div><div class="kpi-sub">of total P2P volume · active monthly view</div></div>
         </div>
 
         <div class="mobile-footer">
-            <div class="security-badge-mobile">
-                <div class="security-icon"><i class="fas fa-lock fa-lg"></i></div>
-                <div>
-                    <h3 style="margin-bottom: 4px;">Secure P2P Vault</h3>
-                    <p style="font-size: 13px; opacity:0.9;">End-to-end encryption · VIP level 2</p>
-                </div>
-            </div>
-            <div class="disclaimer">
-                <p>✅ Last month summary based on finalized P2P orders. Activate daily/weekly/monthly views to unlock detailed analytics.</p>
-                <p style="margin-top: 8px;">🔒 VIP dashboard — GANESH SIDDHARTH PATIL.</p>
-            </div>
-            <div class="footer-links-mobile">
-                <div class="footer-link" id="settingsBtn"><i class="fas fa-cog"></i> Settings</div>
-                <div class="footer-link"><i class="fas fa-file-invoice"></i> Full statement</div>
-                <div class="footer-link"><i class="fas fa-chart-column"></i> Analytics</div>
+            <div class="security-badge-mobile"><div class="security-icon"><i class="fas fa-lock fa-lg"></i></div><div><h3 style="margin-bottom:4px;">Secure P2P Vault</h3><p style="font-size:13px; opacity:0.9;">End-to-end encryption · VIP level 2</p></div></div>
+            <div class="disclaimer"><p>✅ Last month summary based on finalized P2P orders. Activate daily/weekly/monthly views to unlock detailed analytics.</p><p style="margin-top:8px;">🔒 VIP dashboard — GANESH SIDDHARTH PATIL.</p></div>
+            <div class="footer-links-mobile"><div class="footer-link" id="settingsBtn"><i class="fas fa-cog"></i> Settings</div><div class="footer-link"><i class="fas fa-file-invoice"></i> Full statement</div><div class="footer-link"><i class="fas fa-chart-column"></i> Analytics</div></div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="confirm-modal">
+        <div class="modal-card">
+            <div class="modal-icon"><i class="fas fa-question-circle"></i></div>
+            <div class="modal-title">Confirm Activation</div>
+            <div class="modal-desc" id="modalDesc">Are you sure you want to activate Daily Transaction (3%)? This will be applicable from next month.</div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-cancel" id="modalCancel">No</button>
+                <button class="modal-btn modal-confirm" id="modalConfirm">Yes, Activate</button>
             </div>
         </div>
     </div>
 
     <script>
-        // live datetime
+        // Live datetime
         function updateDateTime() {
             const now = new Date();
-            const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', dateOptions);
-            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-            document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US', timeOptions);
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', { day:'numeric', month:'long', year:'numeric' });
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:true });
         }
-        updateDateTime();
-        setInterval(updateDateTime, 1000);
+        updateDateTime(); setInterval(updateDateTime, 1000);
 
-        // last month reference
+        // Month display
+        const today = new Date();
+        let lastMonthDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        document.getElementById('lastMonthBadge').innerHTML = lastMonthDate.toLocaleDateString('en-US', { month:'long', year:'numeric' });
+        
+        // Next month text for modal
+        function getNextMonthName() {
+            const next = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+            return next.toLocaleDateString('en-US', { month:'long', year:'numeric' });
+        }
+
         const USD_TO_INR = 83.75;
         const monthlyData = { sentUSD: 1285.40, receivedUSD: 2340.75, commissionUSD: 48.25 };
-        
         function updateNumbers() {
             document.getElementById('totalSentValue').innerHTML = `$${monthlyData.sentUSD.toFixed(2)} USD`;
             document.getElementById('totalReceivedValue').innerHTML = `$${monthlyData.receivedUSD.toFixed(2)} USD`;
             document.getElementById('commissionValue').innerHTML = `$${monthlyData.commissionUSD.toFixed(2)} USD`;
-            const sentInr = monthlyData.sentUSD * USD_TO_INR;
-            const recInr = monthlyData.receivedUSD * USD_TO_INR;
-            const commInr = monthlyData.commissionUSD * USD_TO_INR;
-            document.getElementById('sentSub').innerHTML = `≈ ₹${sentInr.toFixed(0)} INR · 12 orders`;
-            document.getElementById('receivedSub').innerHTML = `≈ ₹${recInr.toFixed(0)} INR · 23 trades`;
-            document.getElementById('commissionSub').innerHTML = `≈ ₹${commInr.toFixed(0)} INR · 0.12% avg fee`;
+            document.getElementById('sentSub').innerHTML = `≈ ₹${(monthlyData.sentUSD * USD_TO_INR).toFixed(0)} INR · 12 orders`;
+            document.getElementById('receivedSub').innerHTML = `≈ ₹${(monthlyData.receivedUSD * USD_TO_INR).toFixed(0)} INR · 23 trades`;
+            document.getElementById('commissionSub').innerHTML = `≈ ₹${(monthlyData.commissionUSD * USD_TO_INR).toFixed(0)} INR · 0.12% avg fee`;
             const totalVol = monthlyData.sentUSD + monthlyData.receivedUSD;
             document.getElementById('totalVolumeValue').innerHTML = `$${totalVol.toFixed(2)} USD`;
         }
         updateNumbers();
-
-        // 4% commission efficiency fixed
         document.getElementById('efficiencyValue').innerText = "4%";
 
-        // send/receive eligibility with VIP level 2 message
-        document.getElementById('sendBtn').addEventListener('click', () => {
-            alert("⚠️ You're not eligible for this transaction. Your activated automatic transactions in VIP level 2.");
-        });
-        document.getElementById('receiveBtn').addEventListener('click', () => {
-            alert("⚠️ You're not eligible for this transaction. Your activated automatic transactions in VIP level 2.");
-        });
+        // Send/Receive eligibility
+        document.getElementById('sendBtn').addEventListener('click', () => alert("⚠️ You're not eligible for this transaction. Your activated automatic transactions in VIP level 2."));
+        document.getElementById('receiveBtn').addEventListener('click', () => alert("⚠️ You're not eligible for this transaction. Your activated automatic transactions in VIP level 2."));
 
-        // Activation logic (daily 3%, weekly 3.2%, monthly 4%)
-        const activationState = {
-            daily: false,
-            weekly: false,
-            monthly: false
-        };
-
+        // ---------- CONFIRMATION LOGIC (show confirm, then only "submitted" + next month message) ----------
+        let pendingPlan = null;
+        const modal = document.getElementById('confirmModal');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalConfirm = document.getElementById('modalConfirm');
+        const modalCancel = document.getElementById('modalCancel');
         const msgDiv = document.getElementById('activationMessage');
-        const activateBtns = document.querySelectorAll('.activate-btn');
-        
-        function showMessage(text, isError = false) {
-            msgDiv.innerHTML = text;
-            msgDiv.style.color = isError ? '#b91c1c' : '#0a5c3e';
-            setTimeout(() => {
-                if(msgDiv.innerHTML === text) msgDiv.innerHTML = "";
-            }, 3000);
+
+        function closeModal() { modal.classList.remove('active'); pendingPlan = null; }
+        function openModal(planType, percent) {
+            pendingPlan = { type: planType, fee: percent };
+            const nextMonth = getNextMonthName();
+            modalDesc.innerHTML = `Are you sure you want to activate <strong>${planType.charAt(0).toUpperCase() + planType.slice(1)} Transaction (${percent}%)</strong>?<br><br>⚠️ This will be applicable from <strong>${nextMonth}</strong>.`;
+            modal.classList.add('active');
         }
 
+        modalConfirm.addEventListener('click', () => {
+            if(pendingPlan) {
+                // Show submitted message without actual activation (no state change)
+                const nextMonthApply = getNextMonthName();
+                msgDiv.innerHTML = `✅ Submitted! Your request for ${pendingPlan.type} transaction (${pendingPlan.fee}%) has been recorded. This will be applicable from ${nextMonthApply}. Verification in progress.`;
+                msgDiv.style.color = "#0a5c3e";
+                setTimeout(() => {
+                    if(msgDiv.innerHTML.includes("Submitted")) msgDiv.style.opacity = "0.8";
+                }, 4000);
+                // Do NOT change button state or activation — only show submitted.
+                // Also do NOT disable button or mark as activated.
+                closeModal();
+                // Optional: flash effect on the selected card
+                const targetBtn = document.querySelector(`.activate-btn[data-plan="${pendingPlan.type}"]`);
+                if(targetBtn) {
+                    targetBtn.style.transform = "scale(0.98)";
+                    setTimeout(() => targetBtn.style.transform = "", 200);
+                }
+                pendingPlan = null;
+            } else { closeModal(); }
+        });
+
+        modalCancel.addEventListener('click', () => {
+            msgDiv.innerHTML = "❌ Activation cancelled.";
+            msgDiv.style.color = "#b91c1c";
+            setTimeout(() => { if(msgDiv.innerHTML === "❌ Activation cancelled.") msgDiv.innerHTML = ""; }, 2000);
+            closeModal();
+        });
+        modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+
+        // Attach confirmation to activation buttons (instead of direct activation)
+        const activateBtns = document.querySelectorAll('.activate-btn');
         activateBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const plan = btn.getAttribute('data-plan');
-                if(plan === 'daily') {
-                    if(activationState.daily) {
-                        showMessage("✅ Daily transaction view already activated.", false);
-                        return;
-                    }
-                    showMessage("⏳ Submitted, wait for verification for Daily Transaction (3%)...", false);
-                    setTimeout(() => {
-                        activationState.daily = true;
-                        btn.disabled = true;
-                        btn.innerText = "Activated ✓";
-                        btn.style.background = "#10b981";
-                        showMessage("✅ Daily Transaction view activated! (3% fee applied)");
-                        updateActivePlanStyle('daily');
-                    }, 2000);
-                } 
-                else if(plan === 'weekly') {
-                    if(activationState.weekly) {
-                        showMessage("✅ Weekly transaction view already activated.", false);
-                        return;
-                    }
-                    showMessage("⏳ Submitted, wait for verification for Weekly Transaction (3.2%)...", false);
-                    setTimeout(() => {
-                        activationState.weekly = true;
-                        btn.disabled = true;
-                        btn.innerText = "Activated ✓";
-                        btn.style.background = "#10b981";
-                        showMessage("✅ Weekly Transaction view activated! (3.2% fee applied)");
-                        updateActivePlanStyle('weekly');
-                    }, 2000);
-                }
-                else if(plan === 'monthly') {
-                    if(activationState.monthly) {
-                        showMessage("✅ Monthly transaction view already active (4%).", false);
-                        return;
-                    }
-                    showMessage("⏳ Submitted, wait for verification for Monthly Transaction (4%)...", false);
-                    setTimeout(() => {
-                        activationState.monthly = true;
-                        btn.disabled = true;
-                        btn.innerText = "Activated ✓";
-                        btn.style.background = "#10b981";
-                        showMessage("✅ Monthly Transaction view activated! (4% feature now active)");
-                        updateActivePlanStyle('monthly');
-                        // also update Commission Efficiency to 4% (already 4%)
-                        document.getElementById('efficiencyValue').innerText = "4%";
-                    }, 2000);
-                }
+                let percent = "";
+                if(plan === 'daily') percent = "3%";
+                else if(plan === 'weekly') percent = "3.2%";
+                else if(plan === 'monthly') percent = "4%";
+                openModal(plan, percent);
             });
         });
 
-        function updateActivePlanStyle(activePlan) {
-            // visual feedback on card
-            const containers = document.querySelectorAll('.activate-opt');
-            containers.forEach(cont => {
-                const type = cont.getAttribute('data-type');
-                if(type === activePlan) {
-                    cont.style.border = "2px solid #f0b90b";
-                    cont.style.background = "#fffbeb";
-                } else {
-                    cont.style.border = "1px solid #e2e8f0";
-                    cont.style.background = "#f8fafc";
-                }
-            });
-        }
-
-        // settings button: show activation summary
+        // Settings button: show status (no activation stored, always pending state)
         const settingsBtn = document.getElementById('settingsBtn');
         if(settingsBtn) {
             settingsBtn.addEventListener('click', () => {
-                let statusMsg = "⚙️ ACTIVATION STATUS:\n";
-                statusMsg += `Daily (3%): ${activationState.daily ? '✅ Active' : '❌ Not activated'}\n`;
-                statusMsg += `Weekly (3.2%): ${activationState.weekly ? '✅ Active' : '❌ Not activated'}\n`;
-                statusMsg += `Monthly (4%): ${activationState.monthly ? '✅ Active (feature running)' : '❌ Not activated'}\n`;
-                statusMsg += `\nVIP Level 2: Automatic transaction restrictions apply.`;
-                alert(statusMsg);
+                alert("⚙️ ACTIVATION STATUS:\n• Daily (3%): Not active — pending confirmation\n• Weekly (3.2%): Not active — pending confirmation\n• Monthly (4%): Not active — pending confirmation\n\nAny activation request will be applicable from next month.\nVIP Level 2: Automatic transaction restrictions apply.");
             });
         }
-        
-        // month badge dynamic
-        const today = new Date();
-        let lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-        const monthName = lastMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-        document.getElementById('lastMonthBadge').innerText = monthName;
     </script>
 </body>
 </html>
