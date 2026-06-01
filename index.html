@@ -6,6 +6,11 @@
   <title>P2P Vault · Secure Login</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Firebase SDKs (correct imports) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  
   <style>
     * {
       margin: 0;
@@ -177,6 +182,11 @@
       box-shadow: 0 6px 14px rgba(240, 185, 11, 0.3);
     }
 
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(240, 185, 11, 0.4);
+    }
+
     .login-btn:active {
       transform: scale(0.97);
     }
@@ -192,8 +202,6 @@
       text-align: center;
       font-size: 13px;
       font-weight: 500;
-      background: #fef9e3;
-      color: #b45309;
       display: none;
       align-items: center;
       justify-content: center;
@@ -202,6 +210,16 @@
 
     .message-box.show {
       display: flex;
+    }
+
+    .message-box.error {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .message-box.success {
+      background: #d1fae5;
+      color: #065f46;
     }
 
     .divider {
@@ -232,6 +250,33 @@
 
     .footer-note i {
       color: #f0b90b;
+    }
+
+    /* Demo credentials hint */
+    .demo-hint {
+      background: #f8fafc;
+      border-radius: 20px;
+      padding: 12px 16px;
+      margin-top: 20px;
+      border: 1px solid #e2e8f0;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .demo-hint p {
+      color: #475569;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .demo-hint code {
+      background: #e2e8f0;
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #1e293b;
+      display: inline-block;
+      margin: 4px;
     }
 
     @keyframes fadeInUp {
@@ -295,8 +340,16 @@
     </button>
 
     <div class="message-box" id="msgBox">
-      <i class="fas fa-circle-exclamation"></i>
+      <i class="fas fa-circle-exclamation" id="msgIcon"></i>
       <span id="msgText"></span>
+    </div>
+
+    <!-- Demo credentials hint (for testing) -->
+    <div class="demo-hint">
+      <p><i class="fas fa-info-circle"></i> Demo Account</p>
+      <code>Email: demo@binancep2p.com</code>
+      <code>Password: demo123456</code>
+      <p style="margin-top: 8px; font-size: 11px;">Or use your registered Firebase account</p>
     </div>
 
     <div class="divider">
@@ -313,7 +366,7 @@
 </div>
 
 <script>
-  // Firebase configuration (from provided credentials)
+  // Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyA8qJwI0ZWV30JKq2eB8yv-LsMRjz6INLg",
     authDomain: "shreematkaboss.firebaseapp.com",
@@ -324,7 +377,9 @@
   };
 
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
   const auth = firebase.auth();
 
   // DOM elements
@@ -333,18 +388,23 @@
   const loginBtn = document.getElementById('loginBtn');
   const msgBox = document.getElementById('msgBox');
   const msgText = document.getElementById('msgText');
+  const msgIcon = document.getElementById('msgIcon');
 
   // Helper: show message with style
   function showMessage(message, isError = true) {
     msgText.innerText = message;
     msgBox.classList.add('show');
     if (isError) {
-      msgBox.style.background = "#fee2e2";
-      msgBox.style.color = "#b91c1c";
+      msgBox.classList.remove('success');
+      msgBox.classList.add('error');
+      msgIcon.className = 'fas fa-circle-exclamation';
     } else {
-      msgBox.style.background = "#d1fae5";
-      msgBox.style.color = "#065f46";
+      msgBox.classList.remove('error');
+      msgBox.classList.add('success');
+      msgIcon.className = 'fas fa-check-circle';
     }
+    
+    // Auto hide after 4 seconds
     setTimeout(() => {
       msgBox.classList.remove('show');
     }, 4000);
@@ -361,19 +421,19 @@
     }
   }
 
-  // Login function with enhanced UX
+  // Login function
   async function login() {
     const email = emailInput.value.trim();
     const password = passwordInput.value;
 
-    // Basic validation
+    // Validation
     if (!email) {
-      showMessage('❄️ Please enter your email address', true);
+      showMessage('Please enter your email address', true);
       emailInput.focus();
       return;
     }
     if (!password) {
-      showMessage('🔒 Password is required', true);
+      showMessage('Password is required', true);
       passwordInput.focus();
       return;
     }
@@ -383,60 +443,80 @@
     try {
       const userCredential = await auth.signInWithEmailAndPassword(email, password);
       const user = userCredential.user;
-      console.log("✅ Login success:", user.email);
+      console.log("✅ Login successful:", user.email);
       
-      // Optional: small success message before redirect
-      showMessage("✓ Authentication successful! Redirecting to dashboard...", false);
+      showMessage(`Welcome back, ${user.email}! Redirecting to dashboard...`, false);
       
-      // Redirect to dashboard (update to your actual dashboard filename)
+      // Store user info in localStorage for dashboard
+      localStorage.setItem('p2p_user_email', user.email);
+      localStorage.setItem('p2p_user_uid', user.uid);
+      
+      // Redirect after short delay
       setTimeout(() => {
         window.location.href = "dashboard.html";
-      }, 800);
+      }, 1000);
       
     } catch (error) {
       setLoading(false);
-      let friendlyMessage = "Authentication failed. ";
+      console.error("Login error:", error.code, error.message);
+      
+      let friendlyMessage = "";
       
       // Human-readable Firebase error messages
       switch (error.code) {
         case 'auth/user-not-found':
-          friendlyMessage = "⚠️ No account found with this email. Please check your credentials.";
+          friendlyMessage = "No account found with this email. Please check your credentials or sign up.";
           break;
         case 'auth/wrong-password':
-          friendlyMessage = "🔑 Incorrect password. Please try again.";
+          friendlyMessage = "Incorrect password. Please try again.";
           break;
         case 'auth/invalid-email':
-          friendlyMessage = "📧 Invalid email format. Use a valid email address.";
+          friendlyMessage = "Invalid email format. Use a valid email address.";
           break;
         case 'auth/too-many-requests':
-          friendlyMessage = "⏳ Too many failed attempts. Please wait and try again later.";
+          friendlyMessage = "Too many failed attempts. Please wait and try again later.";
           break;
         case 'auth/network-request-failed':
-          friendlyMessage = "🌐 Network error. Check your internet connection.";
+          friendlyMessage = "Network error. Check your internet connection.";
+          break;
+        case 'auth/invalid-credential':
+          friendlyMessage = "Invalid credentials. Please check your email and password.";
           break;
         default:
-          friendlyMessage = `❌ ${error.message}`;
+          friendlyMessage = `Authentication failed: ${error.message}`;
       }
       showMessage(friendlyMessage, true);
     }
   }
 
   // Trigger login on Enter key
-  const inputs = [emailInput, passwordInput];
-  inputs.forEach(input => {
-    input.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        login();
-      }
-    });
+  emailInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      passwordInput.focus();
+    }
+  });
+  
+  passwordInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      login();
+    }
   });
 
   // Attach click handler
   loginBtn.addEventListener('click', login);
   
-  // Optional: prefill demo hint for VIP (not auto-filling for security but user-friendly)
-  console.log("P2P Vault Login Ready — secure Firebase auth");
+  // Check if user is already logged in
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      console.log("User already logged in:", user.email);
+      // Optional: auto redirect
+      // window.location.href = "dashboard.html";
+    }
+  });
+  
+  console.log("✅ P2P Vault Login Ready — Firebase Auth initialized");
 </script>
 
 </body>
