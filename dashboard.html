@@ -232,7 +232,6 @@
         .btn-receive-mobile { background: #10b981; color: white; box-shadow: 0 4px 8px rgba(16,185,129,0.2); }
         .btn-mobile:active { transform: scale(0.96); }
 
-        /* Monthly Transaction Panel - Only Monthly Option */
         .monthly-activation-panel {
             padding: 16px 20px 20px;
             background: #ffffff;
@@ -385,6 +384,13 @@
             font-weight: 800;
             color: #0f172a;
             letter-spacing: -0.3px;
+            margin-bottom: 5px;
+        }
+
+        .kpi-inr {
+            font-size: 16px;
+            color: #475569;
+            font-weight: 500;
             margin-bottom: 8px;
         }
 
@@ -436,6 +442,13 @@
             font-size: 28px;
             font-weight: 800;
             margin-top: 8px;
+            margin-bottom: 5px;
+        }
+
+        .stat-inr {
+            font-size: 15px;
+            color: #475569;
+            font-weight: 500;
         }
 
         .mobile-footer {
@@ -486,7 +499,6 @@
             margin-top: 18px;
         }
 
-        /* Custom confirmation modal */
         .confirm-modal {
             position: fixed;
             top: 0;
@@ -595,7 +607,6 @@
             </div>
         </div>
 
-        <!-- Monthly Transaction Activation Panel (Only Monthly) -->
         <div class="monthly-activation-panel">
             <div class="activation-title">
                 <i class="fas fa-calendar-alt" style="color:#f0b90b;"></i> 
@@ -613,14 +624,13 @@
                     </div>
                 </div>
                 <button class="monthly-activate-btn" id="monthlyActivateBtn">
-                    <i class="fas fa-rocket"></i> Activated 4%
+                    <i class="fas fa-rocket"></i> Activate 4%
                 </button>
             </div>
             
             <div id="activationMessage" class="activation-message"></div>
         </div>
 
-        <!-- Monthly Metrics -->
         <div class="monthly-metrics">
             <div class="section-title">
                 <h2><i class="fas fa-calendar-alt"></i> Last Month Activity</h2>
@@ -632,24 +642,27 @@
                         <div class="kpi-icon" style="background:#ef4444;"><i class="fas fa-arrow-up"></i></div>
                         <h3>Total Sent</h3>
                     </div>
-                    <div class="kpi-value" id="totalSentValue">$2,420.0 USD</div>
-                    <div class="kpi-sub" id="sentSub">≈ ₹2,17,800 INR · 12 orders</div>
+                    <div class="kpi-value">$2,420.0 USD</div>
+                    <div class="kpi-inr">≈ ₹2,17,800 INR</div>
+                    <div class="kpi-sub">12 orders completed</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-header">
                         <div class="kpi-icon" style="background:#10b981;"><i class="fas fa-arrow-down"></i></div>
                         <h3>Total Received</h3>
                     </div>
-                    <div class="kpi-value" id="totalReceivedValue">$2,580.0 USD</div>
-                    <div class="kpi-sub" id="receivedSub">≈ ₹2,32,200 INR · 23 trades</div>
+                    <div class="kpi-value">$2,580.0 USD</div>
+                    <div class="kpi-inr">≈ ₹2,32,200 INR</div>
+                    <div class="kpi-sub">23 trades completed</div>
                 </div>
                 <div class="kpi-card commission-highlight">
                     <div class="kpi-header">
                         <div class="kpi-icon" style="background:#f0b90b; color:#0f172a;"><i class="fas fa-percent"></i></div>
                         <h3>Commission Earned</h3>
                     </div>
-                    <div class="kpi-value" id="commissionValue">$200.05 USD</div>
-                    <div class="kpi-sub" id="commissionSub">≈ ₹18,004.00 INR · 4.0% avg fee</div>
+                    <div class="kpi-value">$200.05 USD</div>
+                    <div class="kpi-inr">≈ ₹18,004.00 INR</div>
+                    <div class="kpi-sub">4.0% avg fee</div>
                 </div>
             </div>
         </div>
@@ -660,16 +673,17 @@
                     <div class="stat-icon" style="background:#3b82f6;"><i class="fas fa-chart-pie"></i></div>
                     <div style="font-weight:700;">Total Volume (Last Month)</div>
                 </div>
-                <div class="stat-value" id="totalVolumeValue">$200.05 USD</div>
-                <div class="kpi-sub">≈ ₹4,50,000 INR | Cummission 18,004.00 credited to your bank within 2 working days</div>
+                <div class="stat-value">$5,000.0 USD</div>
+                <div class="stat-inr">≈ ₹4,50,000 INR</div>
+                <div class="kpi-sub" style="margin-top:8px;">Commission ₹18,004.00 credited to your bank within 2 working days</div>
             </div>
             <div class="stat-card-mobile">
                 <div class="stat-header">
                     <div class="stat-icon" style="background:#8b5cf6;"><i class="fas fa-chart-line"></i></div>
                     <div style="font-weight:700;">Commission Rate Efficiency</div>
                 </div>
-                <div class="stat-value" id="efficiencyValue">4%</div>
-                <div class="kpi-sub">of total P2P volume · monthly active</div>
+                <div class="stat-value">4%</div>
+                <div class="stat-inr">of total P2P volume · monthly active</div>
             </div>
         </div>
 
@@ -693,7 +707,6 @@
         </div>
     </div>
 
-    <!-- Confirmation Modal -->
     <div id="confirmModal" class="confirm-modal">
         <div class="modal-card">
             <div class="modal-icon"><i class="fas fa-question-circle"></i></div>
@@ -721,27 +734,10 @@
         let lastMonthDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
         document.getElementById('lastMonthBadge').innerHTML = lastMonthDate.toLocaleDateString('en-US', { month:'long', year:'numeric' });
         
-        // Next month text for modal
         function getNextMonthName() {
             const next = new Date(today.getFullYear(), today.getMonth() + 1, 1);
             return next.toLocaleDateString('en-US', { month:'long', year:'numeric' });
         }
-
-        const USD_TO_INR = 83.75;
-        const monthlyData = { sentUSD: 1285.40, receivedUSD: 2340.75, commissionUSD: 48.25 };
-        
-        function updateNumbers() {
-            document.getElementById('totalSentValue').innerHTML = `$${monthlyData.sentUSD.toFixed(2)} USD`;
-            document.getElementById('totalReceivedValue').innerHTML = `$${monthlyData.receivedUSD.toFixed(2)} USD`;
-            document.getElementById('commissionValue').innerHTML = `$${monthlyData.commissionUSD.toFixed(2)} USD`;
-            document.getElementById('sentSub').innerHTML = `≈ ₹${(monthlyData.sentUSD * USD_TO_INR).toFixed(0)} INR · 12 orders`;
-            document.getElementById('receivedSub').innerHTML = `≈ ₹${(monthlyData.receivedUSD * USD_TO_INR).toFixed(0)} INR · 23 trades`;
-            document.getElementById('commissionSub').innerHTML = `≈ ₹${(monthlyData.commissionUSD * USD_TO_INR).toFixed(0)} INR · 0.12% avg fee`;
-            const totalVol = monthlyData.sentUSD + monthlyData.receivedUSD;
-            document.getElementById('totalVolumeValue').innerHTML = `$${totalVol.toFixed(2)} USD`;
-        }
-        updateNumbers();
-        document.getElementById('efficiencyValue').innerText = "4%";
 
         // Send/Receive eligibility
         document.getElementById('sendBtn').addEventListener('click', () => alert("⚠️ You're not eligible for this transaction. Your activated automatic transactions in VIP level 2."));
@@ -781,7 +777,6 @@
                 msgDiv.style.color = "#065f46";
                 msgDiv.style.border = "1px solid #10b981";
                 
-                // Disable button after activation
                 monthlyBtn.disabled = true;
                 monthlyBtn.innerHTML = '<i class="fas fa-check"></i> Request Submitted';
                 monthlyBtn.style.opacity = "0.6";
@@ -819,7 +814,6 @@
             if(e.target === modal) closeModal(); 
         });
 
-        // Attach click to monthly activation button
         monthlyBtn.addEventListener('click', () => {
             if(monthlyBtn.disabled) {
                 msgDiv.innerHTML = `
@@ -840,7 +834,6 @@
             openMonthlyModal();
         });
 
-        // Settings button
         const settingsBtn = document.getElementById('settingsBtn');
         if(settingsBtn) {
             settingsBtn.addEventListener('click', () => {
@@ -848,6 +841,93 @@
                 alert(`⚙️ MONTHLY TRANSACTION STATUS:\n\n• Monthly View (4%): ${status}\n\n• Activation requests apply from next month.\n• VIP Level 2: Automatic transaction restrictions apply.\n\nContact support for more details.`);
             });
         }
+
+        // Easy Edit Functionality - Press 'E' to edit numbers
+        let editPanel = null;
+        
+        // Create edit panel dynamically
+        function createEditPanel() {
+            const panel = document.createElement('div');
+            panel.id = 'editPanel';
+            panel.style.cssText = 'display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:20px; border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.3); z-index:2000; width:320px;';
+            panel.innerHTML = `
+                <h3 style="margin-bottom:15px;">Edit Numbers</h3>
+                <label>Total Sent (USD):</label>
+                <input type="number" id="editSent" step="0.01" style="width:100%; padding:8px; margin:5px 0 15px; border:1px solid #ddd; border-radius:10px;">
+                <label>Total Sent (INR):</label>
+                <input type="text" id="editSentINR" style="width:100%; padding:8px; margin:5px 0 15px; border:1px solid #ddd; border-radius:10px;">
+                <label>Total Received (USD):</label>
+                <input type="number" id="editReceived" step="0.01" style="width:100%; padding:8px; margin:5px 0 15px; border:1px solid #ddd; border-radius:10px;">
+                <label>Total Received (INR):</label>
+                <input type="text" id="editReceivedINR" style="width:100%; padding:8px; margin:5px 0 15px; border:1px solid #ddd; border-radius:10px;">
+                <label>Commission (USD):</label>
+                <input type="number" id="editCommission" step="0.01" style="width:100%; padding:8px; margin:5px 0 15px; border:1px solid #ddd; border-radius:10px;">
+                <label>Commission (INR):</label>
+                <input type="text" id="editCommissionINR" style="width:100%; padding:8px; margin:5px 0 15px; border:1px solid #ddd; border-radius:10px;">
+                <label>Total Volume (USD):</label>
+                <input type="number" id="editVolume" step="0.01" style="width:100%; padding:8px; margin:5px 0 15px; border:1px solid #ddd; border-radius:10px;">
+                <label>Total Volume (INR):</label>
+                <input type="text" id="editVolumeINR" style="width:100%; padding:8px; margin:5px 0 15px; border:1px solid #ddd; border-radius:10px;">
+                <button id="saveEditBtn" style="background:#f0b90b; border:none; padding:12px; border-radius:10px; width:100%; font-weight:bold; margin-top:10px;">Save Changes</button>
+                <button id="closeEditBtn" style="background:#e2e8f0; border:none; padding:10px; border-radius:10px; width:100%; margin-top:8px;">Close</button>
+            `;
+            document.body.appendChild(panel);
+            return panel;
+        }
+        
+        editPanel = createEditPanel();
+        
+        // Load current values into edit panel
+        function loadCurrentValues() {
+            document.getElementById('editSent').value = parseFloat(document.querySelector('.kpi-card:first-child .kpi-value').innerHTML.replace('$', '').replace(' USD', ''));
+            document.getElementById('editSentINR').value = document.querySelector('.kpi-card:first-child .kpi-inr').innerHTML.replace('≈ ', '').replace(' INR', '');
+            document.getElementById('editReceived').value = parseFloat(document.querySelector('.kpi-card:nth-child(2) .kpi-value').innerHTML.replace('$', '').replace(' USD', ''));
+            document.getElementById('editReceivedINR').value = document.querySelector('.kpi-card:nth-child(2) .kpi-inr').innerHTML.replace('≈ ', '').replace(' INR', '');
+            document.getElementById('editCommission').value = parseFloat(document.querySelector('.kpi-card:nth-child(3) .kpi-value').innerHTML.replace('$', '').replace(' USD', ''));
+            document.getElementById('editCommissionINR').value = document.querySelector('.kpi-card:nth-child(3) .kpi-inr').innerHTML.replace('≈ ', '').replace(' INR', '');
+            document.getElementById('editVolume').value = parseFloat(document.querySelector('.stat-value').innerHTML.replace('$', '').replace(' USD', ''));
+            document.getElementById('editVolumeINR').value = document.querySelector('.stat-inr').innerHTML.replace('≈ ', '').replace(' INR', '');
+        }
+        
+        // Save edited values
+        document.getElementById('saveEditBtn').addEventListener('click', () => {
+            let newSent = parseFloat(document.getElementById('editSent').value);
+            let newSentINR = document.getElementById('editSentINR').value;
+            let newReceived = parseFloat(document.getElementById('editReceived').value);
+            let newReceivedINR = document.getElementById('editReceivedINR').value;
+            let newCommission = parseFloat(document.getElementById('editCommission').value);
+            let newCommissionINR = document.getElementById('editCommissionINR').value;
+            let newVolume = parseFloat(document.getElementById('editVolume').value);
+            let newVolumeINR = document.getElementById('editVolumeINR').value;
+            
+            document.querySelector('.kpi-card:first-child .kpi-value').innerHTML = `$${newSent.toFixed(2)} USD`;
+            document.querySelector('.kpi-card:first-child .kpi-inr').innerHTML = `≈ ${newSentINR} INR`;
+            document.querySelector('.kpi-card:nth-child(2) .kpi-value').innerHTML = `$${newReceived.toFixed(2)} USD`;
+            document.querySelector('.kpi-card:nth-child(2) .kpi-inr').innerHTML = `≈ ${newReceivedINR} INR`;
+            document.querySelector('.kpi-card:nth-child(3) .kpi-value').innerHTML = `$${newCommission.toFixed(2)} USD`;
+            document.querySelector('.kpi-card:nth-child(3) .kpi-inr').innerHTML = `≈ ${newCommissionINR} INR`;
+            document.querySelector('.stat-value').innerHTML = `$${newVolume.toFixed(2)} USD`;
+            document.querySelector('.stat-inr').innerHTML = `≈ ${newVolumeINR} INR`;
+            
+            editPanel.style.display = 'none';
+            alert('Numbers updated successfully!');
+        });
+        
+        document.getElementById('closeEditBtn').addEventListener('click', () => {
+            editPanel.style.display = 'none';
+        });
+        
+        // Press 'E' to show/hide edit panel
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'e' || e.key === 'E') {
+                if(editPanel.style.display === 'none') {
+                    loadCurrentValues();
+                    editPanel.style.display = 'block';
+                } else {
+                    editPanel.style.display = 'none';
+                }
+            }
+        });
     </script>
 </body>
 </html>
