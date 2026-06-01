@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Binance P2P · May Transactions | VIP Dashboard</title>
+    <title>Binance P2P · VIP Monthly Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -232,11 +232,93 @@
         .btn-receive-mobile { background: #10b981; color: white; box-shadow: 0 4px 8px rgba(16,185,129,0.2); }
         .btn-mobile:active { transform: scale(0.96); }
 
-        /* May Transactions Section */
-        .transactions-section {
+        /* Monthly Transaction Panel - Only Monthly Option */
+        .monthly-activation-panel {
+            padding: 16px 20px 20px;
+            background: #ffffff;
+            border-top: 1px solid #edf2f7;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .activation-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .monthly-activation-card {
+            background: linear-gradient(135deg, #fef7e0, #fff6e5);
+            border-radius: 24px;
+            padding: 20px;
+            border: 2px solid #f0b90b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .monthly-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .monthly-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #f0b90b, #facc15);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #0f172a;
+        }
+
+        .monthly-text strong {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .monthly-text small {
+            font-size: 13px;
+            color: #78350f;
+        }
+
+        .monthly-activate-btn {
+            background: #f0b90b;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .monthly-activate-btn:active { transform: scale(0.96); }
+        .monthly-activate-btn:disabled { background: #cbd5e1; cursor: not-allowed; opacity: 0.6; }
+
+        .activation-message {
+            font-size: 13px;
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .monthly-metrics {
             padding: 12px 20px 24px;
             background: white;
-            border-top: 1px solid #edf2f7;
         }
 
         .section-title {
@@ -265,141 +347,59 @@
             font-weight: 700;
         }
 
-        .transaction-list {
+        .kpi-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            max-height: 500px;
-            overflow-y: auto;
-            padding-right: 4px;
+            gap: 18px;
+            margin-bottom: 28px;
         }
 
-        .transaction-card {
+        .kpi-card {
             background: #ffffff;
-            border-radius: 20px;
-            padding: 16px;
+            border-radius: 28px;
+            padding: 20px;
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.03);
             border: 1px solid #eef2ff;
-            transition: all 0.2s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
 
-        .transaction-card:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.05);
-            border-color: #f0b90b40;
-        }
-
-        .transaction-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .transaction-date {
-            font-size: 13px;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .transaction-type {
+        .kpi-header {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 12px;
+            gap: 14px;
+            margin-bottom: 14px;
         }
 
-        .type-sent {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-
-        .type-received {
-            background: #d1fae5;
-            color: #059669;
-        }
-
-        .transaction-details {
+        .kpi-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 28px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
         }
 
-        .transaction-party h3 {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .transaction-party p {
-            font-size: 12px;
-            color: #64748b;
-        }
-
-        .transaction-amount {
-            font-size: 18px;
-            font-weight: 800;
-            text-align: right;
-        }
-
-        .transaction-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #d1fae5;
-            color: #065f46;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 11px;
-            margin-top: 10px;
-        }
-
-        .commission-badge {
-            background: #fef3c7;
-            color: #b45309;
-            font-size: 11px;
-            padding: 2px 8px;
-            border-radius: 30px;
-            margin-left: 8px;
-        }
-
-        /* summary cards */
-        .may-summary {
-            background: linear-gradient(135deg, #fef7e0, #fff6e5);
-            border-radius: 24px;
-            padding: 16px;
-            margin-bottom: 20px;
-            border: 1px solid #fde68a;
-        }
-
-        .summary-stats {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .summary-item {
-            flex: 1;
-            text-align: center;
-        }
-
-        .summary-label {
-            font-size: 12px;
-            color: #78350f;
-            margin-bottom: 4px;
-        }
-
-        .summary-value {
-            font-size: 20px;
+        .kpi-value {
+            font-size: 34px;
             font-weight: 800;
             color: #0f172a;
+            letter-spacing: -0.3px;
+            margin-bottom: 8px;
+        }
+
+        .kpi-sub {
+            font-size: 14px;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .commission-highlight {
+            background: linear-gradient(135deg, #fef7e0, #fff6e5);
+            border-left: 4px solid #f0b90b;
         }
 
         .mobile-performance {
@@ -486,6 +486,77 @@
             margin-top: 18px;
         }
 
+        /* Custom confirmation modal */
+        .confirm-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+        .confirm-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-card {
+            background: white;
+            width: 320px;
+            border-radius: 32px;
+            padding: 24px 20px 20px;
+            text-align: center;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.3);
+            transform: scale(0.95);
+            transition: transform 0.2s;
+        }
+        .confirm-modal.active .modal-card {
+            transform: scale(1);
+        }
+        .modal-icon {
+            font-size: 48px;
+            color: #f0b90b;
+            margin-bottom: 12px;
+        }
+        .modal-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .modal-desc {
+            font-size: 14px;
+            color: #475569;
+            margin-bottom: 20px;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .modal-btn {
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .modal-confirm {
+            background: #f0b90b;
+            color: #0f172a;
+        }
+        .modal-cancel {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
         @media (min-width: 480px) {
             .container { max-width: 500px; margin: 0 auto; }
         }
@@ -501,10 +572,10 @@
         <div class="mobile-header">
             <div class="mobile-header-top">
                 <div class="logo"><i class="fas fa-exchange-alt"></i><span>Binance P2P</span></div>
-                <div class="statement-badge">MAY 2026</div>
+                <div class="statement-badge">VIP LEVEL 2</div>
             </div>
-            <h1>May Transactions</h1>
-            <div class="subtitle">Full monthly history · Sent & Received</div>
+            <h1>Monthly Transaction Dashboard</h1>
+            <div class="subtitle">Last month summary · Send/Receive · Commission</div>
         </div>
 
         <div class="mobile-account-section">
@@ -515,8 +586,8 @@
             </div>
             <div class="balance-card-mobile">
                 <div class="label">Current Wallet Balance</div>
-                <div class="amount">$1,248.90 USD</div>
-                <div class="inr">≈ ₹104,600 INR</div>
+                <div class="amount">$955.05 USD</div>
+                <div class="inr">≈ ₹79,842.00 INR</div>
             </div>
             <div class="mobile-action-buttons">
                 <button class="btn-mobile btn-send-mobile" id="sendBtn"><i class="fas fa-paper-plane"></i> Send</button>
@@ -524,44 +595,114 @@
             </div>
         </div>
 
-        <!-- MAY TRANSACTIONS LIST -->
-        <div class="transactions-section">
-            <div class="section-title">
-                <h2><i class="fas fa-calendar-alt"></i> May 2026 Transactions</h2>
-                <div class="month-badge">01 May - 31 May</div>
+        <!-- Monthly Transaction Activation Panel (Only Monthly) -->
+        <div class="monthly-activation-panel">
+            <div class="activation-title">
+                <i class="fas fa-calendar-alt" style="color:#f0b90b;"></i> 
+                <span>Monthly Transaction Feature</span>
             </div>
-
-            <!-- Summary Stats for May -->
-            <div class="may-summary">
-                <div class="summary-stats">
-                    <div class="summary-item"><div class="summary-label">Total Sent</div><div class="summary-value" id="maySentTotal">$1,890.00</div></div>
-                    <div class="summary-item"><div class="summary-label">Total Received</div><div class="summary-value" id="mayReceivedTotal">$2,545.50</div></div>
-                    <div class="summary-item"><div class="summary-label">Commission</div><div class="summary-value" id="mayCommissionTotal">$53.25</div></div>
+            
+            <div class="monthly-activation-card">
+                <div class="monthly-info">
+                    <div class="monthly-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="monthly-text">
+                        <strong>Monthly Transaction View</strong>
+                        <small>4% fee · Complete monthly analytics</small>
+                    </div>
                 </div>
+                <button class="monthly-activate-btn" id="monthlyActivateBtn">
+                    <i class="fas fa-rocket"></i> Activate 4%
+                </button>
             </div>
+            
+            <div id="activationMessage" class="activation-message"></div>
+        </div>
 
-            <div class="transaction-list" id="transactionList">
-                <!-- Transactions will be injected via JS -->
+        <!-- Monthly Metrics -->
+        <div class="monthly-metrics">
+            <div class="section-title">
+                <h2><i class="fas fa-calendar-alt"></i> Last Month Activity</h2>
+                <div class="month-badge" id="lastMonthBadge"></div>
+            </div>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background:#ef4444;"><i class="fas fa-arrow-up"></i></div>
+                        <h3>Total Sent</h3>
+                    </div>
+                    <div class="kpi-value" id="totalSentValue">$1,285.40 USD</div>
+                    <div class="kpi-sub" id="sentSub">≈ ₹107,674 INR · 12 orders</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background:#10b981;"><i class="fas fa-arrow-down"></i></div>
+                        <h3>Total Received</h3>
+                    </div>
+                    <div class="kpi-value" id="totalReceivedValue">$2,340.75 USD</div>
+                    <div class="kpi-sub" id="receivedSub">≈ ₹196,008 INR · 23 trades</div>
+                </div>
+                <div class="kpi-card commission-highlight">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background:#f0b90b; color:#0f172a;"><i class="fas fa-percent"></i></div>
+                        <h3>Commission Earned</h3>
+                    </div>
+                    <div class="kpi-value" id="commissionValue">$48.25 USD</div>
+                    <div class="kpi-sub" id="commissionSub">≈ ₹4,041 INR · 0.12% avg fee</div>
+                </div>
             </div>
         </div>
 
         <div class="mobile-performance">
             <div class="stat-card-mobile">
-                <div class="stat-header"><div class="stat-icon" style="background:#3b82f6;"><i class="fas fa-chart-line"></i></div><div style="font-weight:700;">May Volume & Commission</div></div>
-                <div class="stat-value" id="mayTotalVolume">$4,435.50 USD</div>
-                <div class="kpi-sub">Net flow: +$655.50 | Commission rate: 1.2%</div>
+                <div class="stat-header">
+                    <div class="stat-icon" style="background:#3b82f6;"><i class="fas fa-chart-pie"></i></div>
+                    <div style="font-weight:700;">Total Volume (Last Month)</div>
+                </div>
+                <div class="stat-value" id="totalVolumeValue">$3,626.15 USD</div>
+                <div class="kpi-sub">≈ ₹303,682 INR | Net flow: +$1,055.35</div>
             </div>
             <div class="stat-card-mobile">
-                <div class="stat-header"><div class="stat-icon" style="background:#8b5cf6;"><i class="fas fa-chart-simple"></i></div><div style="font-weight:700;">Commission Efficiency</div></div>
-                <div class="stat-value">4%</div>
-                <div class="kpi-sub">active monthly view · VIP tier</div>
+                <div class="stat-header">
+                    <div class="stat-icon" style="background:#8b5cf6;"><i class="fas fa-chart-line"></i></div>
+                    <div style="font-weight:700;">Commission Rate Efficiency</div>
+                </div>
+                <div class="stat-value" id="efficiencyValue">4%</div>
+                <div class="kpi-sub">of total P2P volume · monthly active</div>
             </div>
         </div>
 
         <div class="mobile-footer">
-            <div class="security-badge-mobile"><div class="security-icon"><i class="fas fa-lock fa-lg"></i></div><div><h3 style="margin-bottom:4px;">Secure P2P Vault</h3><p style="font-size:13px; opacity:0.9;">End-to-end encryption · May statement</p></div></div>
-            <div class="disclaimer"><p>✅ Complete transaction history for May 2026. All amounts include applicable P2P fees.</p><p style="margin-top:8px;">🔒 GANESH SIDDHARTH PATIL — Verified Account</p></div>
-            <div class="footer-links-mobile"><div class="footer-link" id="settingsBtn"><i class="fas fa-cog"></i> Settings</div><div class="footer-link"><i class="fas fa-file-invoice"></i> Full statement</div><div class="footer-link"><i class="fas fa-download"></i> Export CSV</div></div>
+            <div class="security-badge-mobile">
+                <div class="security-icon"><i class="fas fa-lock fa-lg"></i></div>
+                <div>
+                    <h3 style="margin-bottom:4px;">Secure P2P Vault</h3>
+                    <p style="font-size:13px; opacity:0.9;">End-to-end encryption · VIP level 2</p>
+                </div>
+            </div>
+            <div class="disclaimer">
+                <p>✅ Last month summary based on finalized P2P orders. Monthly transaction view provides complete analytics.</p>
+                <p style="margin-top:8px;">🔒 VIP dashboard — GANESH SIDDHARTH PATIL.</p>
+            </div>
+            <div class="footer-links-mobile">
+                <div class="footer-link" id="settingsBtn"><i class="fas fa-cog"></i> Settings</div>
+                <div class="footer-link"><i class="fas fa-file-invoice"></i> Full statement</div>
+                <div class="footer-link"><i class="fas fa-chart-column"></i> Analytics</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="confirm-modal">
+        <div class="modal-card">
+            <div class="modal-icon"><i class="fas fa-question-circle"></i></div>
+            <div class="modal-title">Confirm Monthly Activation</div>
+            <div class="modal-desc" id="modalDesc">Are you sure you want to activate Monthly Transaction view (4%)? This will be applicable from next month.</div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-cancel" id="modalCancel">No</button>
+                <button class="modal-btn modal-confirm" id="modalConfirm">Yes, Activate</button>
+            </div>
         </div>
     </div>
 
@@ -572,96 +713,141 @@
             document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', { day:'numeric', month:'long', year:'numeric' });
             document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:true });
         }
-        updateDateTime(); setInterval(updateDateTime, 1000);
+        updateDateTime(); 
+        setInterval(updateDateTime, 1000);
+
+        // Month display
+        const today = new Date();
+        let lastMonthDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        document.getElementById('lastMonthBadge').innerHTML = lastMonthDate.toLocaleDateString('en-US', { month:'long', year:'numeric' });
+        
+        // Next month text for modal
+        function getNextMonthName() {
+            const next = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+            return next.toLocaleDateString('en-US', { month:'long', year:'numeric' });
+        }
+
+        const USD_TO_INR = 83.75;
+        const monthlyData = { sentUSD: 1285.40, receivedUSD: 2340.75, commissionUSD: 48.25 };
+        
+        function updateNumbers() {
+            document.getElementById('totalSentValue').innerHTML = `$${monthlyData.sentUSD.toFixed(2)} USD`;
+            document.getElementById('totalReceivedValue').innerHTML = `$${monthlyData.receivedUSD.toFixed(2)} USD`;
+            document.getElementById('commissionValue').innerHTML = `$${monthlyData.commissionUSD.toFixed(2)} USD`;
+            document.getElementById('sentSub').innerHTML = `≈ ₹${(monthlyData.sentUSD * USD_TO_INR).toFixed(0)} INR · 12 orders`;
+            document.getElementById('receivedSub').innerHTML = `≈ ₹${(monthlyData.receivedUSD * USD_TO_INR).toFixed(0)} INR · 23 trades`;
+            document.getElementById('commissionSub').innerHTML = `≈ ₹${(monthlyData.commissionUSD * USD_TO_INR).toFixed(0)} INR · 0.12% avg fee`;
+            const totalVol = monthlyData.sentUSD + monthlyData.receivedUSD;
+            document.getElementById('totalVolumeValue').innerHTML = `$${totalVol.toFixed(2)} USD`;
+        }
+        updateNumbers();
+        document.getElementById('efficiencyValue').innerText = "4%";
 
         // Send/Receive eligibility
         document.getElementById('sendBtn').addEventListener('click', () => alert("⚠️ You're not eligible for this transaction. Your activated automatic transactions in VIP level 2."));
         document.getElementById('receiveBtn').addEventListener('click', () => alert("⚠️ You're not eligible for this transaction. Your activated automatic transactions in VIP level 2."));
 
-        // ============ MAY 2026 TRANSACTIONS DATA ============
-        const mayTransactions = [
-            { date: "2026-05-01", time: "09:23", type: "sent", counterparty: "raj_trader", amount: 120.50, status: "completed", commission: 0.36 },
-            { date: "2026-05-02", time: "14:15", type: "received", counterparty: "crypto_vibes", amount: 340.00, status: "completed", commission: 0.68 },
-            { date: "2026-05-04", time: "11:47", type: "sent", counterparty: "merchant_ankit", amount: 85.30, status: "completed", commission: 0.26 },
-            { date: "2026-05-05", time: "16:02", type: "received", counterparty: "swapnil_p2p", amount: 210.75, status: "completed", commission: 0.42 },
-            { date: "2026-05-07", time: "10:30", type: "sent", counterparty: "neha_trades", amount: 450.00, status: "completed", commission: 1.35 },
-            { date: "2026-05-09", time: "19:20", type: "received", counterparty: "p2p_master", amount: 125.60, status: "completed", commission: 0.25 },
-            { date: "2026-05-11", time: "08:45", type: "sent", counterparty: "coinflow", amount: 230.20, status: "completed", commission: 0.69 },
-            { date: "2026-05-13", time: "13:10", type: "received", counterparty: "bit_boss", amount: 415.00, status: "completed", commission: 0.83 },
-            { date: "2026-05-15", time: "21:35", type: "sent", counterparty: "sathish_p2p", amount: 67.80, status: "completed", commission: 0.20 },
-            { date: "2026-05-17", time: "07:55", type: "received", counterparty: "cryptoguru", amount: 278.40, status: "completed", commission: 0.56 },
-            { date: "2026-05-19", time: "12:28", type: "sent", counterparty: "trade_easy", amount: 195.00, status: "completed", commission: 0.59 },
-            { date: "2026-05-20", time: "15:40", type: "received", counterparty: "vijay_p2p", amount: 500.00, status: "completed", commission: 1.00 },
-            { date: "2026-05-22", time: "09:05", type: "sent", counterparty: "priya_trade", amount: 155.00, status: "completed", commission: 0.47 },
-            { date: "2026-05-24", time: "18:30", type: "received", counterparty: "blockchain_raj", amount: 310.75, status: "completed", commission: 0.62 },
-            { date: "2026-05-26", time: "11:15", type: "sent", counterparty: "fast_p2p", amount: 88.20, status: "completed", commission: 0.26 },
-            { date: "2026-05-28", time: "14:50", type: "received", counterparty: "crypto_queen", amount: 189.00, status: "completed", commission: 0.38 },
-            { date: "2026-05-29", time: "20:12", type: "sent", counterparty: "arun_deals", amount: 298.00, status: "completed", commission: 0.89 },
-            { date: "2026-05-30", time: "06:45", type: "received", counterparty: "p2p_wizard", amount: 176.00, status: "completed", commission: 0.35 },
-            { date: "2026-05-31", time: "23:00", type: "received", counterparty: "last_minute", amount: 150.00, status: "pending", commission: 0.30 }
-        ];
+        // Monthly activation confirmation logic
+        const modal = document.getElementById('confirmModal');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalConfirm = document.getElementById('modalConfirm');
+        const modalCancel = document.getElementById('modalCancel');
+        const msgDiv = document.getElementById('activationMessage');
+        const monthlyBtn = document.getElementById('monthlyActivateBtn');
 
-        // Calculate totals
-        let totalSentMay = 0, totalReceivedMay = 0, totalCommissionMay = 0;
-        mayTransactions.forEach(tx => {
-            if(tx.type === 'sent') totalSentMay += tx.amount;
-            else totalReceivedMay += tx.amount;
-            totalCommissionMay += tx.commission;
-        });
+        let pendingMonthly = false;
 
-        document.getElementById('maySentTotal').innerText = `$${totalSentMay.toFixed(2)}`;
-        document.getElementById('mayReceivedTotal').innerText = `$${totalReceivedMay.toFixed(2)}`;
-        document.getElementById('mayCommissionTotal').innerText = `$${totalCommissionMay.toFixed(2)}`;
-        const totalVolume = totalSentMay + totalReceivedMay;
-        document.getElementById('mayTotalVolume').innerText = `$${totalVolume.toFixed(2)} USD`;
-
-        // Render transactions
-        const container = document.getElementById('transactionList');
-        function formatDate(dateStr) {
-            const d = new Date(dateStr);
-            return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        function closeModal() { 
+            modal.classList.remove('active'); 
+            pendingMonthly = false;
         }
 
-        mayTransactions.forEach(tx => {
-            const card = document.createElement('div');
-            card.className = 'transaction-card';
-            const typeClass = tx.type === 'sent' ? 'type-sent' : 'type-received';
-            const typeIcon = tx.type === 'sent' ? '<i class="fas fa-arrow-up"></i> sent' : '<i class="fas fa-arrow-down"></i> received';
-            const amountColor = tx.type === 'sent' ? '#dc2626' : '#059669';
-            const statusClass = tx.status === 'completed' ? '#d1fae5' : '#fef3c7';
-            const statusColor = tx.status === 'completed' ? '#065f46' : '#92400e';
-            
-            card.innerHTML = `
-                <div class="transaction-header">
-                    <div class="transaction-date">${formatDate(tx.date)} · ${tx.time}</div>
-                    <div class="transaction-type ${typeClass}">${typeIcon}</div>
-                </div>
-                <div class="transaction-details">
-                    <div class="transaction-party">
-                        <h3>${tx.counterparty}</h3>
-                        <p>${tx.type === 'sent' ? 'To' : 'From'} · P2P Trade</p>
-                    </div>
-                    <div class="transaction-amount" style="color:${amountColor};">
-                        ${tx.type === 'sent' ? '-' : '+'}$${tx.amount.toFixed(2)}
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
-                    <div class="transaction-status" style="background:${statusClass}; color:${statusColor};">
-                        <i class="fas ${tx.status === 'completed' ? 'fa-check-circle' : 'fa-clock'}"></i> 
-                        ${tx.status === 'completed' ? 'Completed' : 'Pending'}
-                    </div>
-                    <div class="commission-badge">
-                        <i class="fas fa-percent"></i> fee: $${tx.commission.toFixed(2)}
-                    </div>
-                </div>
+        function openMonthlyModal() {
+            pendingMonthly = true;
+            const nextMonth = getNextMonthName();
+            modalDesc.innerHTML = `Are you sure you want to activate <strong>Monthly Transaction View (4%)</strong>?<br><br>⚠️ This will be applicable from <strong>${nextMonth}</strong>.`;
+            modal.classList.add('active');
+        }
+
+        modalConfirm.addEventListener('click', () => {
+            if(pendingMonthly) {
+                const nextMonthApply = getNextMonthName();
+                msgDiv.innerHTML = `
+                    <i class="fas fa-check-circle" style="color:#10b981;"></i> 
+                    ✅ Submitted! Your request for Monthly Transaction (4%) has been recorded. 
+                    This will be applicable from ${nextMonthApply}. Verification in progress.
+                `;
+                msgDiv.style.background = "#d1fae5";
+                msgDiv.style.color = "#065f46";
+                msgDiv.style.border = "1px solid #10b981";
+                
+                // Disable button after activation
+                monthlyBtn.disabled = true;
+                monthlyBtn.innerHTML = '<i class="fas fa-check"></i> Request Submitted';
+                monthlyBtn.style.opacity = "0.6";
+                
+                setTimeout(() => {
+                    if(msgDiv.innerHTML.includes("Submitted")) {
+                        msgDiv.style.opacity = "0.8";
+                    }
+                }, 5000);
+                closeModal();
+                pendingMonthly = false;
+            } else { 
+                closeModal(); 
+            }
+        });
+
+        modalCancel.addEventListener('click', () => {
+            msgDiv.innerHTML = `
+                <i class="fas fa-times-circle" style="color:#b91c1c;"></i> 
+                ❌ Activation cancelled.
             `;
-            container.appendChild(card);
+            msgDiv.style.background = "#fee2e2";
+            msgDiv.style.color = "#b91c1c";
+            msgDiv.style.border = "1px solid #ef4444";
+            setTimeout(() => { 
+                if(msgDiv.innerHTML.includes("cancelled")) {
+                    msgDiv.innerHTML = "";
+                    msgDiv.style.background = "transparent";
+                }
+            }, 2000);
+            closeModal();
+        });
+        
+        modal.addEventListener('click', (e) => { 
+            if(e.target === modal) closeModal(); 
+        });
+
+        // Attach click to monthly activation button
+        monthlyBtn.addEventListener('click', () => {
+            if(monthlyBtn.disabled) {
+                msgDiv.innerHTML = `
+                    <i class="fas fa-info-circle"></i> 
+                    Request already submitted. Waiting for verification.
+                `;
+                msgDiv.style.background = "#fef3c7";
+                msgDiv.style.color = "#92400e";
+                msgDiv.style.border = "1px solid #f59e0b";
+                setTimeout(() => {
+                    if(msgDiv.innerHTML.includes("already submitted")) {
+                        msgDiv.innerHTML = "";
+                        msgDiv.style.background = "transparent";
+                    }
+                }, 3000);
+                return;
+            }
+            openMonthlyModal();
         });
 
         // Settings button
-        document.getElementById('settingsBtn')?.addEventListener('click', () => {
-            alert("⚙️ MAY TRANSACTIONS SUMMARY\n\n• Total Sent: $" + totalSentMay.toFixed(2) + "\n• Total Received: $" + totalReceivedMay.toFixed(2) + "\n• Total Commission: $" + totalCommissionMay.toFixed(2) + "\n• Net Flow: +$" + (totalReceivedMay - totalSentMay).toFixed(2) + "\n\nVIP Level 2: Automatic transaction restrictions apply.");
-        });
+        const settingsBtn = document.getElementById('settingsBtn');
+        if(settingsBtn) {
+            settingsBtn.addEventListener('click', () => {
+                const status = monthlyBtn.disabled ? "✅ Active (Request Submitted - Pending Verification)" : "❌ Not Activated";
+                alert(`⚙️ MONTHLY TRANSACTION STATUS:\n\n• Monthly View (4%): ${status}\n\n• Activation requests apply from next month.\n• VIP Level 2: Automatic transaction restrictions apply.\n\nContact support for more details.`);
+            });
+        }
     </script>
 </body>
 </html>
