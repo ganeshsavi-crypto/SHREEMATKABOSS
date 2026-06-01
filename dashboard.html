@@ -837,7 +837,7 @@
         const settingsBtn = document.getElementById('settingsBtn');
         if(settingsBtn) {
             settingsBtn.addEventListener('click', () => {
-                const status = monthlyBtn.disabled ? "✅ Active (Request Submitted - Pending Verification)" : "❌ Not Activated";
+                const status = monthlyBtn.disabled ? "✅ Active (Request Submitted - Pending Verification)" : "Activated";
                 alert(`⚙️ MONTHLY TRANSACTION STATUS:\n\n• Monthly View (4%): ${status}\n\n• Activation requests apply from next month.\n• VIP Level 2: Automatic transaction restrictions apply.\n\nContact support for more details.`);
             });
         }
